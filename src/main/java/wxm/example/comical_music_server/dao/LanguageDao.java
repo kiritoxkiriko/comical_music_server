@@ -10,4 +10,7 @@ import wxm.example.comical_music_server.entity.music.Language;
  */
 @Repository
 public interface LanguageDao extends JpaRepository<Language,Long> {
+
+    Language findLanguageByName(String name);
+
 }

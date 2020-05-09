@@ -3,6 +3,7 @@ package wxm.example.comical_music_server.entity.music;
 import wxm.example.comical_music_server.entity.bbs.User;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.sql.Date;
@@ -20,7 +21,7 @@ public class Song implements Serializable, Shareable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @NotNull
+    @NotEmpty
     @Column
     private String name;
 
@@ -41,6 +42,9 @@ public class Song implements Serializable, Shareable {
     @NotNull
     @Column(unique = true)
     private String realPath;
+
+    @Column(unique = true)
+    private String lrcPath;
 
     @ManyToOne
     private User uploader;
@@ -133,6 +137,14 @@ public class Song implements Serializable, Shareable {
 
     public void setAlbum(Album album) {
         this.album = album;
+    }
+
+    public String getLrcPath() {
+        return lrcPath;
+    }
+
+    public void setLrcPath(String lrcPath) {
+        this.lrcPath = lrcPath;
     }
 
     @Override

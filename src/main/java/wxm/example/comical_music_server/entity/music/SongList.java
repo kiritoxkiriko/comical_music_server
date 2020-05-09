@@ -4,6 +4,7 @@ import wxm.example.comical_music_server.entity.bbs.User;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.sql.Date;
 import java.util.Objects;
@@ -18,6 +19,10 @@ public class SongList implements Serializable, Shareable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
+    @Column
+    @NotEmpty
+    private String name;
 
     @Column
     private String introduction;
@@ -38,7 +43,8 @@ public class SongList implements Serializable, Shareable {
         this.date=new Date(System.currentTimeMillis());
     }
 
-    public SongList(String introduction, User creator, @NotEmpty Set<Song> songs) {
+    public SongList(String introduction, @NotEmpty String name,User creator, Set<Song> songs) {
+        this.name=name;
         this.introduction = introduction;
         this.creator = creator;
         this.date=new Date(System.currentTimeMillis());

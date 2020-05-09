@@ -1,6 +1,7 @@
 package wxm.example.comical_music_server.entity.music;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Objects;
@@ -17,7 +18,7 @@ public class Singer implements Serializable, Shareable {
     @Id
     private long id;
 
-    @NotNull
+    @NotEmpty
     @Column
     private String name;
 

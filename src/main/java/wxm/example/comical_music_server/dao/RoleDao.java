@@ -13,7 +13,6 @@ import java.util.Optional;
  */
 @Repository
 public interface RoleDao extends JpaRepository<Role, Long> {
-    Role findRoleById(Long roleId);
 
     Role findRoleByName(String roleName);
 

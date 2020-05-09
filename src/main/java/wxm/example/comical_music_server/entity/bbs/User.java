@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import wxm.example.comical_music_server.entity.user.UserSpace;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.sql.Date;
@@ -21,7 +22,7 @@ public class User implements Serializable {
     @Id
     private long id;
 
-    @NotNull
+    @NotEmpty
     @Column(unique = true)
     private String username;
 
@@ -31,7 +32,7 @@ public class User implements Serializable {
     @Column(unique = true)
     private String phone;
 
-    @NotNull
+    @NotEmpty
     @Column
     @JsonIgnore
     private String password;

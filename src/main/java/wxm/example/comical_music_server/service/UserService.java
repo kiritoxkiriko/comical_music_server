@@ -11,11 +11,13 @@ import wxm.example.comical_music_server.dao.UserDao;
 import wxm.example.comical_music_server.dao.UserSpaceDao;
 import wxm.example.comical_music_server.entity.bbs.Role;
 import wxm.example.comical_music_server.entity.bbs.User;
+import wxm.example.comical_music_server.entity.music.Song;
 import wxm.example.comical_music_server.entity.music.SongList;
 import wxm.example.comical_music_server.entity.user.UserSpace;
 import wxm.example.comical_music_server.utility.PhoneCheckUtil;
 
 import javax.validation.constraints.NotNull;
+import java.util.HashSet;
 import java.util.List;
 import java.util.concurrent.ConcurrentSkipListSet;
 
@@ -75,7 +77,7 @@ public class UserService {
             return null;
         }
 
-        SongList songList=new SongList(user.getUsername()+"'s favorite songs", user, new ConcurrentSkipListSet<>());
+        SongList songList=new SongList(user.getUsername()+"'s favorite songs", user.getUsername()+"'s favorite songs",user, new HashSet<Song>());
         songList=songListDao.saveAndFlush(songList);
         if (songList==null){
             return null;

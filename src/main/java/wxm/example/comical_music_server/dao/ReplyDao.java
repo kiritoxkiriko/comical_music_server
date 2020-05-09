@@ -2,7 +2,10 @@ package wxm.example.comical_music_server.dao;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+import wxm.example.comical_music_server.entity.bbs.Post;
 import wxm.example.comical_music_server.entity.bbs.Reply;
+
+import java.util.List;
 
 /**
  * @author Alex Wang
@@ -10,4 +13,10 @@ import wxm.example.comical_music_server.entity.bbs.Reply;
  */
 @Repository
 public interface ReplyDao extends JpaRepository<Reply, Long> {
+
+    List<Reply> findAllByPost(Post post);
+
+    List<Reply> findAllByPostId(long postId);
+
+
 }

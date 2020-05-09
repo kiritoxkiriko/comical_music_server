@@ -10,4 +10,8 @@ import wxm.example.comical_music_server.entity.music.Song;
  */
 @Repository
 public interface SongDao extends JpaRepository<Song, Long> {
+
+    Song findByName(String name);
+
+    Song findByNameIsLike(String name);
 }
