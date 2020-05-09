@@ -1,6 +1,7 @@
 package wxm.example.comical_music_server.entity.bbs;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.validator.constraints.UniqueElements;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -15,9 +16,10 @@ public class Role {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonIgnore
     private long id;
 
-    @Column
+    @Column(unique = true)
     @NotNull
     private String name;
 
