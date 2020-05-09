@@ -1,8 +1,11 @@
 package wxm.example.comical_music_server.service;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
+import wxm.example.comical_music_server.controller.WebController;
 import wxm.example.comical_music_server.dao.SongListDao;
 import wxm.example.comical_music_server.dao.UserDao;
 import wxm.example.comical_music_server.dao.UserSpaceDao;
@@ -10,6 +13,7 @@ import wxm.example.comical_music_server.entity.bbs.Role;
 import wxm.example.comical_music_server.entity.bbs.User;
 import wxm.example.comical_music_server.entity.music.SongList;
 import wxm.example.comical_music_server.entity.user.UserSpace;
+import wxm.example.comical_music_server.utility.PhoneCheckUtil;
 
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -22,6 +26,8 @@ import java.util.concurrent.ConcurrentSkipListSet;
 
 @Service
 public class UserService {
+
+    private static final Logger LOGGER = LogManager.getLogger(UserService.class);
 
     @Autowired
     private UserDao userDao;
@@ -37,11 +43,11 @@ public class UserService {
     }
 
     public User getUser(String username){
-        //return userDao.findUserByUsername(username);
-        if (!DataSource.getData().containsKey(username)){
-            return null;
-        }
-        return DataSource.getData().get(username);
+        return userDao.findUserByUsername(username);
+//        if (!DataSource.getData().containsKey(username)){
+//            return null;
+//        }
+//        return DataSource.getData().get(username);
     }
 
     public List<User> getAllUser(){
@@ -52,7 +58,14 @@ public class UserService {
         return userDao.findUserByPhone(phone);
     }
 
-    public User addUser(@NotNull String username, String email, String phone, @NotNull String password, Role role){
+    public User getUserByEmail(String email){
+        return userDao.findUserByEmail(email);
+    }
+
+    synchronized public User addUser(@NotNull String username, String email, String phone, @NotNull String password, Role role){
+        if (!PhoneCheckUtil.isChinaPhoneLegal(phone)){
+            return null;
+        }
         if (userDao.existsByUsernameOrEmailOrPhone(username, email, phone)){
             return null;
         }
@@ -75,10 +88,25 @@ public class UserService {
             return null;
         }
         user.setUserSpace(userSpace);
-        user=userDao.saveAndFlush(user)
-        if(user)
-        return null;
+        user=userDao.saveAndFlush(user);
+        return user;
     }
 
-    //public User re
+    public UserSpace getUserSpace(String username){
+        return getUser(username).getUserSpace();
+    }
+
+    public boolean deleteUser(String username){
+        return userDao.deleteByUsername(username)>0;
+    }
+
+    public boolean deleteUser(long userId){
+        try {
+            userDao.deleteById(userId);
+        } catch (Exception e) {
+            LOGGER.error("deleteUserError");
+            return false;
+        }
+        return true;
+    }
 }

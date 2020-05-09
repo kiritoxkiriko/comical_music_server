@@ -8,7 +8,7 @@ import org.apache.commons.codec.digest.DigestUtils;
  */
 
 public class AuthUtil {
-    public static final String SALT="huaji";
+    private static final String SALT="huaji";
 
     public static boolean verifyPassword(String password, String saltedPassword){
         return signPassword(password).equals(saltedPassword);

@@ -27,8 +27,7 @@ public class Role {
     public Role() {
     }
 
-    public Role(long id, @NotNull String name, String permission) {
-        this.id = id;
+    public Role(@NotNull String name, String permission) {
         this.name = name;
         this.permission = permission;
     }

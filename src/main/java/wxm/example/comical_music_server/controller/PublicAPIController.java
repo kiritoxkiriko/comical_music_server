@@ -19,10 +19,10 @@ public class PublicAPIController {
     @Autowired
     private SMSService smsService;
 
-//    @PostMapping("/register")
-//    public ResponseData register(@RequestParam String User){
-//        return null;
-//    }
+    @PostMapping("/register")
+    public ResponseData register(@RequestParam String User){
+        return null;
+    }
 
     @PostMapping("/sendSMS")
     public ResponseData sendSMS(@RequestParam String phone){

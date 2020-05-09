@@ -28,7 +28,7 @@ public class Song implements Serializable, Shareable {
     private Language language;
 
     @ManyToOne
-    private Type type;
+    private Genre genre;
 
     @NotNull
     @ManyToMany
@@ -52,10 +52,10 @@ public class Song implements Serializable, Shareable {
         this.uploadDate=new Date(System.currentTimeMillis());
     }
 
-    public Song(@NotNull String name, Language language, Type type, @NotNull Set<Singer> singers, @NotNull Album album, @NotNull String realPath, User uploader) {
+    public Song(@NotNull String name, Language language, Genre genre, @NotNull Set<Singer> singers, @NotNull Album album, @NotNull String realPath, User uploader) {
         this.name = name;
         this.language = language;
-        this.type = type;
+        this.genre = genre;
         this.singers = singers;
         this.album = album;
         this.realPath = realPath;
@@ -119,12 +119,12 @@ public class Song implements Serializable, Shareable {
         this.language = language;
     }
 
-    public Type getType() {
-        return type;
+    public Genre getGenre() {
+        return genre;
     }
 
-    public void setType(Type type) {
-        this.type = type;
+    public void setGenre(Genre genre) {
+        this.genre = genre;
     }
 
     public Album getAlbum() {

@@ -11,19 +11,19 @@ import java.util.Objects;
  * @date 2020/05/09
  */
 @Entity
-public class Type implements Serializable {
+public class Genre implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @JsonIgnore
     private long id;
 
-    @Column
+    @Column(unique = true)
     private String name;
 
-    public Type() {
+    public Genre() {
     }
 
-    public Type(String name) {
+    public Genre(String name) {
         this.name = name;
     }
 
@@ -47,9 +47,9 @@ public class Type implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Type type = (Type) o;
-        return id == type.id &&
-                Objects.equals(name, type.name);
+        Genre genre = (Genre) o;
+        return id == genre.id &&
+                Objects.equals(name, genre.name);
     }
 
     @Override

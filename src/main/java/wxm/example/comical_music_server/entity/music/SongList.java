@@ -28,7 +28,6 @@ public class SongList implements Serializable, Shareable {
     @Column
     private Date date;
 
-    @NotEmpty
     @ManyToMany
     private Set<Song> songs;
 
