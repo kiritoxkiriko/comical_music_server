@@ -5,9 +5,8 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import wxm.example.comical_music_server.utility.Constant;
+import wxm.example.comical_music_server.constant.Constant;
 
-import java.io.UnsupportedEncodingException;
 import java.sql.Date;
 
 public class JWTUtil {

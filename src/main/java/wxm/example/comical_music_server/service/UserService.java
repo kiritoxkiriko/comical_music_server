@@ -4,6 +4,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import wxm.example.comical_music_server.controller.WebController;
 import wxm.example.comical_music_server.dao.SongListDao;
@@ -14,6 +15,7 @@ import wxm.example.comical_music_server.entity.bbs.User;
 import wxm.example.comical_music_server.entity.music.Song;
 import wxm.example.comical_music_server.entity.music.SongList;
 import wxm.example.comical_music_server.entity.user.UserSpace;
+import wxm.example.comical_music_server.utility.AuthUtil;
 import wxm.example.comical_music_server.utility.PhoneCheckUtil;
 
 import javax.validation.constraints.NotNull;
@@ -68,10 +70,10 @@ public class UserService {
         if (!PhoneCheckUtil.isChinaPhoneLegal(phone)){
             return null;
         }
-        if (userDao.existsByUsernameOrEmailOrPhone(username, email, phone)){
+        if (userDao.existsByUsernameOrPhone(username, phone)){
             return null;
         }
-        User user=new User(username, email, phone, password, role, false);
+        User user=new User(username, email, phone, AuthUtil.signPassword(password), role, false);
         user=userDao.saveAndFlush(user);
         if (user==null){
             return null;
@@ -111,4 +113,29 @@ public class UserService {
         }
         return true;
     }
+
+    public boolean hasUsername(String username){
+        return userDao.existsByUsername(username);
+    }
+
+    public boolean hasPhone(String phone){
+        return userDao.existsByPhone(phone);
+    }
+
+    public boolean verifyPasswordByUsername(String username, String password){
+        User user=getUser(username);
+        if(user==null) {
+            return false;
+        }
+        return AuthUtil.verifyPassword(password,user.getPassword());
+    }
+
+    public boolean verifyPasswordByPhone(String phone, String password){
+        User user=getUserByPhone(phone);
+        if(user==null) {
+            return false;
+        }
+        return AuthUtil.verifyPassword(password,user.getPassword());
+    }
+
 }

@@ -1,5 +1,7 @@
 package wxm.example.comical_music_server.dao;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import wxm.example.comical_music_server.entity.bbs.Post;
@@ -18,5 +20,7 @@ public interface ReplyDao extends JpaRepository<Reply, Long> {
 
     List<Reply> findAllByPostId(long postId);
 
+    Page<Reply> findAllByPostOrderByDateDesc(Post post, Pageable pageable);
 
+    Page<Reply> findAllByPostIdOrderByDateDesc(Post post, Pageable pageable);
 }

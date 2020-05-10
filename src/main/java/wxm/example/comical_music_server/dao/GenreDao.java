@@ -10,5 +10,4 @@ import wxm.example.comical_music_server.entity.music.Genre;
  */
 @Repository
 public interface GenreDao extends JpaRepository<Genre, Long> {
-
 }

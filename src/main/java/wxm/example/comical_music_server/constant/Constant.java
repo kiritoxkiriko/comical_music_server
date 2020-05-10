@@ -1,4 +1,4 @@
-package wxm.example.comical_music_server.utility;
+package wxm.example.comical_music_server.constant;
 
 /**
  * @author Alex Wang
@@ -13,7 +13,7 @@ public class Constant {
 
     public static final String PASSWORD_SALT="huaji";
 
-    public static final long SMS_EXPIRE_TIME=60;
+    public static final long SMS_EXPIRE_TIME=60*5;
 
     //阿里云
     public static final String ALIYUN_ACCESS_KEY_ID="LTAI4Fc43JzfBGxDXf7qkb7N";

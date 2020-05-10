@@ -9,7 +9,7 @@ import com.aliyuncs.http.MethodType;
 import com.aliyuncs.profile.DefaultProfile;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import wxm.example.comical_music_server.shiro.MyRealm;
+import wxm.example.comical_music_server.constant.Constant;
 
 /**
  * @author Alex Wang

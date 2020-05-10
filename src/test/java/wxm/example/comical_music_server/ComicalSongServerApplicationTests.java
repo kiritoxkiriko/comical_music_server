@@ -42,8 +42,8 @@ class ComicalSongServerApplicationTests {
 
     @Test
     void initData(){
-        Role roleAdmin=new Role("admin","admin");
-        Role roleUser=new Role("user","");
+        Role roleAdmin=new Role("admin","admin,view,post,reply");
+        Role roleUser=new Role("user","view,post,reply");
         roleDao.save(roleAdmin);
         roleDao.save(roleUser);
         roleDao.flush();

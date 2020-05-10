@@ -1,7 +1,7 @@
 package wxm.example.comical_music_server.entity.bbs;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -16,16 +16,15 @@ public class Board implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @NotNull
-    @Column
-    private String boardName;
+    @NotEmpty
+    @Column(unique = true)
+    private String name;
 
     public Board() {
     }
 
-    public Board(long id, @NotNull String boardName) {
-        this.id = id;
-        this.boardName = boardName;
+    public Board(@NotEmpty String name) {
+        this.name = name;
     }
 
     public long getId() {
@@ -36,12 +35,12 @@ public class Board implements Serializable {
         this.id = id;
     }
 
-    public String getBoardName() {
-        return boardName;
+    public String getName() {
+        return name;
     }
 
-    public void setBoardName(String boardName) {
-        this.boardName = boardName;
+    public void setName(String boardName) {
+        this.name = boardName;
     }
 
 
@@ -52,11 +51,11 @@ public class Board implements Serializable {
         if (o == null || getClass() != o.getClass()) return false;
         Board board = (Board) o;
         return id == board.id &&
-                Objects.equals(boardName, board.boardName);
+                Objects.equals(name, board.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, boardName);
+        return Objects.hash(id, name);
     }
 }

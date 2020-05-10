@@ -1,10 +1,8 @@
 package wxm.example.comical_music_server.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import wxm.example.comical_music_server.utility.Constant;
+import wxm.example.comical_music_server.constant.Constant;
 import wxm.example.comical_music_server.utility.PhoneCheckUtil;
 import wxm.example.comical_music_server.utility.RedisUtil;
 import wxm.example.comical_music_server.utility.SMSUtil;

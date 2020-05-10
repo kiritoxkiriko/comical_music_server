@@ -10,4 +10,5 @@ import wxm.example.comical_music_server.entity.bbs.Board;
  */
 @Repository
 public interface BoardDao extends JpaRepository<Board,Long> {
+    boolean deleteByName(String name);
 }

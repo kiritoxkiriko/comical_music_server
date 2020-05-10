@@ -18,7 +18,11 @@ public interface PostDao extends JpaRepository<Post,Long> {
 
     List<Post> findAllByPostedBoard(Board board);
 
-    List<Post> findAllByPostedBoardId(long boardId);
+    List<Post> findAllByPostedBoardId(Long boardId);
 
     Page<Post> findAllByPostedBoardOrderByDateDesc(Board board, Pageable pagebale);
+
+    Page<Post> findAllByPostedBoardIdOrderByDateDesc(Long boardId, Pageable pagebale);
+
+    Page<Post> findAllByPostedBoardNameOrderByDateDesc(String boardName, Pageable pageable );
 }

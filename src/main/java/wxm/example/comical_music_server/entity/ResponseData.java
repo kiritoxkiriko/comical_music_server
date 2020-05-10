@@ -1,5 +1,7 @@
 package wxm.example.comical_music_server.entity;
 
+import wxm.example.comical_music_server.constant.StatusCode;
+
 /**
  * @author Alex Wang
  * @date 2020/05/07
@@ -18,6 +20,15 @@ public class ResponseData {
     public ResponseData(int code, String msg, Object data) {
         this.code = code;
         this.msg = msg;
+        this.data = data;
+    }
+
+    public ResponseData() {
+    }
+
+    public ResponseData(StatusCode statusCode,Object data) {
+        this.code = statusCode.getCode();
+        this.msg = statusCode.getMsg();
         this.data = data;
     }
 
