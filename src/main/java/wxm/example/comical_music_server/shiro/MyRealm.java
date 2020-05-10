@@ -3,12 +3,10 @@ package wxm.example.comical_music_server.shiro;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.apache.shiro.authc.AuthenticationException;
-import org.apache.shiro.authc.AuthenticationInfo;
-import org.apache.shiro.authc.AuthenticationToken;
-import org.apache.shiro.authc.SimpleAuthenticationInfo;
+import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
+import org.apache.shiro.authz.UnauthorizedException;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 
@@ -69,16 +67,17 @@ public class MyRealm extends AuthorizingRealm {
         String username = JWTUtil.getUsername(token);
         if (username == null) {
             LOGGER.error("token invalid");
-            throw new AuthenticationException("token invalid");
+            throw new UnauthorizedException( "token invalid");
         }
+        //TODO 探索为什么每次认证失败都返回无消息的 UnauthenticatedException
 
         User user = userService.getUser(username);
         if (user == null) {
-            throw new AuthenticationException("User didn't existed!");
+            throw new UnauthorizedException("User didn't existed!");
         }
 
         if (! JWTUtil.verify(token, username, user.getPassword())) {
-            throw new AuthenticationException("Username or password error");
+            throw new UnauthorizedException("Username or password error");
         }
         //credential= token, principal=User 传给doGetAuthorizationInfo继续验证角色
         return new SimpleAuthenticationInfo(user, token, "my_realm");

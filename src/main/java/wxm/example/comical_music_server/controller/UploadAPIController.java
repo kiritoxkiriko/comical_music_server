@@ -10,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 import wxm.example.comical_music_server.constant.Constant;
 import wxm.example.comical_music_server.constant.StatusCode;
 import wxm.example.comical_music_server.entity.ResponseData;
+import wxm.example.comical_music_server.entity.music.Image;
 import wxm.example.comical_music_server.service.FileService;
 
 /**
@@ -26,13 +27,13 @@ public class UploadAPIController {
     @PostMapping("/img")
     @RequiresPermissions("post")
     public ResponseData uploadImg(@RequestParam MultipartFile file){
-        String path= fileService.uploadImg(file);
-        if(path==null){
+        Image img= fileService.uploadImg(file);
+        if(img==null){
             return new ResponseData(StatusCode.FAILED,null);
-        }else if(path.isBlank()){
-            return new ResponseData(StatusCode.FILE_TYPE_WRONG,null);
         }else {
-            return new ResponseData(StatusCode.SUCCESS, Constant.STATIC_URL_PATH +path);
+            return new ResponseData(StatusCode.SUCCESS, Constant.DOMAIN_URL+Constant.STATIC_URL_PATH+Constant.IMG_PATH+img.getRealName());
         }
     }
+
+
 }

@@ -45,10 +45,10 @@ public class Song implements Serializable, Shareable {
 
     @NotNull
     @Column(unique = true)
-    private String realPath;
+    private String realName;
 
     @Column(unique = true)
-    private String lrcPath;
+    private String lrcName;
 
     @CreatedBy
     @ManyToOne
@@ -61,14 +61,24 @@ public class Song implements Serializable, Shareable {
     public Song(){
     }
 
-    public Song(@NotNull String name, Language language, Genre genre, @NotNull Set<Singer> singers, @NotNull Album album, @NotNull String realPath, User uploader) {
+    public Song(@NotNull String name, Language language, Genre genre, @NotNull Set<Singer> singers, @NotNull Album album, @NotNull String realName, User uploader) {
         this.name = name;
         this.language = language;
         this.genre = genre;
         this.singers = singers;
         this.album = album;
-        this.realPath = realPath;
+        this.realName = realName;
         this.uploader = uploader;
+    }
+
+    public Song(@NotEmpty String name, Language language, Genre genre, @NotNull Set<Singer> singers, @NotNull Album album, @NotNull String realName, String lrcName) {
+        this.name = name;
+        this.language = language;
+        this.genre = genre;
+        this.singers = singers;
+        this.album = album;
+        this.realName = realName;
+        this.lrcName = lrcName;
     }
 
     public long getId() {
@@ -95,12 +105,12 @@ public class Song implements Serializable, Shareable {
         this.singers = singers;
     }
 
-    public String getRealPath() {
-        return realPath;
+    public String getRealName() {
+        return realName;
     }
 
-    public void setRealPath(String realPath) {
-        this.realPath = realPath;
+    public void setRealName(String realPath) {
+        this.realName = realPath;
     }
 
     public User getUploader() {
@@ -143,12 +153,12 @@ public class Song implements Serializable, Shareable {
         this.album = album;
     }
 
-    public String getLrcPath() {
-        return lrcPath;
+    public String getLrcName() {
+        return lrcName;
     }
 
-    public void setLrcPath(String lrcPath) {
-        this.lrcPath = lrcPath;
+    public void setLrcName(String lrcPath) {
+        this.lrcName = lrcPath;
     }
 
     @Override

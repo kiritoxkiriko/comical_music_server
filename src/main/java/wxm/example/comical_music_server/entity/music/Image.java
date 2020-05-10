@@ -1,11 +1,11 @@
 package wxm.example.comical_music_server.entity.music;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.*;
 import org.springframework.data.annotation.CreatedDate;
+import wxm.example.comical_music_server.constant.Constant;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.util.Date;
 import java.util.Objects;
@@ -17,7 +17,9 @@ import java.util.Objects;
 @Entity
 public class Image {
     @Id
-    private String realPath;
+
+    @JsonIgnore
+    private String realName;
 
     @CreatedDate
     @Column
@@ -27,16 +29,16 @@ public class Image {
     public Image() {
     }
 
-    public Image(String realPath) {
-        this.realPath = realPath;
+    public Image(String realName) {
+        this.realName = realName;
     }
 
-    public String getRealPath() {
-        return realPath;
+    public String getRealName() {
+        return realName;
     }
 
-    public void setRealPath(String realPath) {
-        this.realPath = realPath;
+    public void setRealName(String realPath) {
+        this.realName = realPath;
     }
 
     public Date getDate() {
@@ -47,23 +49,28 @@ public class Image {
         this.date = date;
     }
 
+    @JsonGetter
+    public String getPath(){
+        return Constant.DOMAIN_URL+Constant.STATIC_URL_PATH+Constant.IMG_PATH+"/"+getRealName();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Image image = (Image) o;
-        return Objects.equals(realPath, image.realPath);
+        return Objects.equals(realName, image.realName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(realPath);
+        return Objects.hash(realName);
     }
 
     @Override
     public String toString() {
         return "Image{" +
-                "realPath='" + realPath + '\'' +
+                "realPath='" + realName + '\'' +
                 ", date=" + date +
                 '}';
     }

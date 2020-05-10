@@ -1,5 +1,6 @@
 package wxm.example.comical_music_server.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -7,6 +8,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import wxm.example.comical_music_server.constant.Constant;
+import wxm.example.comical_music_server.dao.ImageDao;
+import wxm.example.comical_music_server.entity.music.Image;
 import wxm.example.comical_music_server.utility.FileUtil;
 
 import javax.xml.xpath.XPath;
@@ -24,23 +27,28 @@ import java.util.UUID;
  */
 @Service
 public class FileService {
-    public String uploadImg(MultipartFile file){
+
+    @Autowired
+    private ImageDao imageDao;
+    public Image uploadImg(MultipartFile file){
         if(file.isEmpty()){
             return null;
         }
 
         String fileName = file.getOriginalFilename();
         if(!FileUtil.isImage(fileName)){
-            return  "";
+            return  null;
         }
 
         File realFile=FileUtil.upload(file,Constant.RESOURCE_PATH+Constant.IMG_PATH, UUID.randomUUID().toString().replace("-","")+"."+FileUtil.getSuffix(fileName));
         if (realFile==null){
             return null;
         }
-
-        return Constant.IMG_PATH+"/"+realFile.getName();
+        Image image=new Image(realFile.getName());
+        image=imageDao.saveAndFlush(image);
+        return image;
     }
+
 
     public String uploadAudio(MultipartFile file){
         if(file.isEmpty()){
@@ -57,7 +65,7 @@ public class FileService {
             return null;
         }
 
-        return Constant.AUDIO_PATH+"/"+realFile.getName();
+        return Constant.STATIC_URL_PATH+Constant.AUDIO_PATH+"/"+realFile.getName();
     }
 
     public String uploadLrc(MultipartFile file){
@@ -75,7 +83,7 @@ public class FileService {
             return null;
         }
 
-        return Constant.LRC_PATH+"/"+realFile.getName();
+        return Constant.STATIC_URL_PATH+Constant.LRC_PATH+"/"+realFile.getName();
     }
 
     public Resource loadFileAsResource(String path) throws IOException{

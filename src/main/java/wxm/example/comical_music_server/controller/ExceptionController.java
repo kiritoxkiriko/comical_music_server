@@ -12,6 +12,7 @@ import wxm.example.comical_music_server.entity.ResponseData;
 import wxm.example.comical_music_server.exception.NotFoundException;
 import wxm.example.comical_music_server.exception.UnauthorizedException;
 
+import javax.naming.AuthenticationException;
 import javax.servlet.http.HttpServletRequest;
 
 @RestControllerAdvice
@@ -28,9 +29,15 @@ public class ExceptionController {
     // 捕捉UnauthorizedException
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @ExceptionHandler(UnauthorizedException.class)
-    public ResponseData handle401() {
+    public ResponseData handle401(UnauthorizedException e) {
         //System.out.println(11);
-        return new ResponseData(StatusCode.UNAUTHORIZED, null);
+        return new ResponseData(401, e.getMessage(),null);
+    }
+
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    @ExceptionHandler(AuthenticationException.class)
+    public ResponseData handle401(AuthenticationException exception){
+        return new ResponseData(401, exception.getMessage(),null);
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)

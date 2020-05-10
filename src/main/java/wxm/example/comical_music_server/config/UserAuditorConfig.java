@@ -16,8 +16,13 @@ import java.util.Optional;
 public class UserAuditorConfig implements AuditorAware<User> {
     @Override
     public Optional<User> getCurrentAuditor() {
-        Subject subject = SecurityUtils.getSubject();
-        User user= (User) SecurityUtils.getSubject().getPrincipals().getPrimaryPrincipal();
+        User user= null;
+        try {
+            Subject subject = SecurityUtils.getSubject();
+            user = (User) SecurityUtils.getSubject().getPrincipals().getPrimaryPrincipal();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return Optional.ofNullable(user);
     }
 }
