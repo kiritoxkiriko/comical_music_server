@@ -1,12 +1,15 @@
 package wxm.example.comical_music_server.entity.music;
 
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import wxm.example.comical_music_server.entity.bbs.User;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.sql.Date;
+import java.util.Date;
 import java.util.Objects;
 import java.util.Set;
 
@@ -15,6 +18,7 @@ import java.util.Set;
  * @date 2020/05/05
  */
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 public class Song implements Serializable, Shareable {
 
     @Id
@@ -46,14 +50,15 @@ public class Song implements Serializable, Shareable {
     @Column(unique = true)
     private String lrcPath;
 
+    @CreatedBy
     @ManyToOne
     private User uploader;
 
+    @CreatedDate
     @Column
     private Date uploadDate;
 
-    public Song() {
-        this.uploadDate=new Date(System.currentTimeMillis());
+    public Song(){
     }
 
     public Song(@NotNull String name, Language language, Genre genre, @NotNull Set<Singer> singers, @NotNull Album album, @NotNull String realPath, User uploader) {
@@ -64,7 +69,6 @@ public class Song implements Serializable, Shareable {
         this.album = album;
         this.realPath = realPath;
         this.uploader = uploader;
-        this.uploadDate=new Date(System.currentTimeMillis());
     }
 
     public long getId() {

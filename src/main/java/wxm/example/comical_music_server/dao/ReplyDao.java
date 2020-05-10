@@ -20,7 +20,7 @@ public interface ReplyDao extends JpaRepository<Reply, Long> {
 
     List<Reply> findAllByPostId(long postId);
 
-    Page<Reply> findAllByPostOrderByDateDesc(Post post, Pageable pageable);
+    Page<Reply> findAllByPost(Post post, Pageable pageable);
 
-    Page<Reply> findAllByPostIdOrderByDateDesc(Post post, Pageable pageable);
+    Page<Reply> findAllByPostId(Post post, Pageable pageable);
 }

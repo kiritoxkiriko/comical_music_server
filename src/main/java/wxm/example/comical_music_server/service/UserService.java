@@ -125,6 +125,7 @@ public class UserService {
     public boolean verifyPasswordByUsername(String username, String password){
         User user=getUser(username);
         if(user==null) {
+            LOGGER.error("无此用户");
             return false;
         }
         return AuthUtil.verifyPassword(password,user.getPassword());

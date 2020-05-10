@@ -1,10 +1,13 @@
 package wxm.example.comical_music_server.entity.music;
 
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import wxm.example.comical_music_server.entity.bbs.User;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.sql.Date;
+import java.util.Date;
 import java.util.Objects;
 
 /**
@@ -13,6 +16,7 @@ import java.util.Objects;
  */
 
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 public class SongComment {
 
     @Id
@@ -23,6 +27,7 @@ public class SongComment {
     @NotNull
     private String content;
 
+    @CreatedBy
     @ManyToOne
     private User replier;
 
@@ -33,13 +38,13 @@ public class SongComment {
     private Song song;
 
     @Column
+    @CreatedDate
     private Date date;
 
     @Column
     private long likeCount=0;
 
     public SongComment() {
-        this.date=new Date(System.currentTimeMillis());
     }
 
     public SongComment(@NotNull String content, User replier, SongComment replyTo, Song song) {
@@ -47,7 +52,6 @@ public class SongComment {
         this.replier = replier;
         this.replyTo = replyTo;
         this.song = song;
-        this.date=new Date(System.currentTimeMillis());
     }
 
     public long getId() {

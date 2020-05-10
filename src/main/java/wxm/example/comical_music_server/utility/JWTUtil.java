@@ -5,7 +5,10 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import wxm.example.comical_music_server.constant.Constant;
+import wxm.example.comical_music_server.entity.bbs.User;
 
 import java.sql.Date;
 
@@ -62,5 +65,11 @@ public class JWTUtil {
         } catch (Exception e) {
             return null;
         }
+    }
+
+    public static User getCurrentUser(){
+        Subject subject = SecurityUtils.getSubject();
+        User user= (User) SecurityUtils.getSubject().getPrincipals().getPrimaryPrincipal();
+        return user;
     }
 }

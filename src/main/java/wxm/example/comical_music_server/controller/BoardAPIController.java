@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import wxm.example.comical_music_server.constant.StatusCode;
 import wxm.example.comical_music_server.entity.ResponseData;
 import wxm.example.comical_music_server.entity.bbs.Board;
@@ -16,7 +17,7 @@ import java.util.List;
  * @author Alex Wang
  * @date 2020/05/10
  */
-@Controller
+@RestController
 @RequestMapping("/api/board")
 public class BoardAPIController {
 
@@ -28,4 +29,6 @@ public class BoardAPIController {
     public ResponseData getAll(){
         return new ResponseData(StatusCode.SUCCESS,boardService.getAll());
     }
+
+
 }

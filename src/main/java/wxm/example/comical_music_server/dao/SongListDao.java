@@ -18,6 +18,6 @@ public interface SongListDao extends JpaRepository<SongList,Long> {
 
     SongList findByCreator(User user);
 
-    SongList findByCreator_Id(long userId);
+    SongList findByCreatorId(long userId);
 
 }

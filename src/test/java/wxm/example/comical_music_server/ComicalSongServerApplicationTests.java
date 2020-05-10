@@ -5,9 +5,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.stereotype.Service;
-import wxm.example.comical_music_server.dao.GenreDao;
-import wxm.example.comical_music_server.dao.LanguageDao;
-import wxm.example.comical_music_server.dao.RoleDao;
+import wxm.example.comical_music_server.dao.*;
+import wxm.example.comical_music_server.entity.bbs.Board;
+import wxm.example.comical_music_server.entity.bbs.Post;
 import wxm.example.comical_music_server.entity.bbs.Role;
 import wxm.example.comical_music_server.entity.bbs.User;
 import wxm.example.comical_music_server.entity.music.Genre;
@@ -33,10 +33,15 @@ class ComicalSongServerApplicationTests {
     LanguageDao languageDao;
     @Autowired
     GenreDao genreDao;
+    @Autowired
+    BoardDao boardDao;
+    @Autowired
+    PostDao postDao;
 
     @Test
     void contextLoads() {
         //smsService.sendSMSCode("13072213550", "666666");
+        System.out.println(AuthUtil.signPassword("admin"));
         System.out.println(AuthUtil.signPassword("admin"));
     }
 
@@ -48,7 +53,7 @@ class ComicalSongServerApplicationTests {
         roleDao.save(roleUser);
         roleDao.flush();
 
-        User admin=userService.addUser("admin","","13800000000",AuthUtil.signPassword("admin"),roleAdmin);
+        User admin=userService.addUser("admin","","13800000000","admin",roleAdmin);
 
         List<Language> languages=new ArrayList<>();
         languages.add(new Language("华语"));
@@ -69,6 +74,19 @@ class ComicalSongServerApplicationTests {
         genres.add(new Genre("其他"));
         genreDao.saveAll(genres);
         genreDao.flush();
+
+        List<Board> boards=new ArrayList<>();
+        boards.add(new Board("音乐分享"));
+        boards.add(new Board("歌单分享"));
+        boards.add(new Board("灌水"));
+        boardDao.saveAll(boards);
+        boardDao.flush();
+
+//        Board board=new Board();
+//        board.setId(1);
+//        Post post=new Post("123123",null,null,null,admin,board);
+//        postDao.saveAndFlush(post);
+
     }
 
 }

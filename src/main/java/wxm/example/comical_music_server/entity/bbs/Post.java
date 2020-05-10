@@ -1,11 +1,14 @@
 package wxm.example.comical_music_server.entity.bbs;
 
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import wxm.example.comical_music_server.entity.music.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.sql.Date;
+import java.util.Date;
 import java.util.Objects;
 import java.util.Set;
 
@@ -15,14 +18,14 @@ import java.util.Set;
  */
 
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 public class Post implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @NotNull
-    @Column
+    @CreatedDate
     private Date date;
 
     @NotNull
@@ -33,13 +36,14 @@ public class Post implements Serializable {
     private Set<Song> sharedSongs;
 
     @ManyToMany
-    private Set<Image> sharedImages;
+    public Set<Image> sharedImages;
 
     @ManyToMany
     private Set<SongList> sharedSongLists;
 
 
     @NotNull
+    @CreatedBy
     @ManyToOne
     private User poster;
 
@@ -51,6 +55,23 @@ public class Post implements Serializable {
 
 
     public Post() {
+    }
+
+    public Post(@NotNull String content, Set<Song> sharedSongs, Set<Image> sharedImages, Set<SongList> sharedSongLists, @NotNull User poster, @NotNull Board postedBoard) {
+        this.content = content;
+        this.sharedSongs = sharedSongs;
+        this.sharedImages = sharedImages;
+        this.sharedSongLists = sharedSongLists;
+        this.poster = poster;
+        this.postedBoard = postedBoard;
+    }
+
+    public Post(@NotNull String content, Set<Song> sharedSongs, Set<Image> sharedImages, Set<SongList> sharedSongLists, @NotNull Board postedBoard) {
+        this.content = content;
+        this.sharedSongs = sharedSongs;
+        this.sharedImages = sharedImages;
+        this.sharedSongLists = sharedSongLists;
+        this.postedBoard = postedBoard;
     }
 
     public long getId() {

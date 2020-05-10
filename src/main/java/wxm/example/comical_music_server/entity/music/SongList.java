@@ -1,12 +1,14 @@
 package wxm.example.comical_music_server.entity.music;
 
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import wxm.example.comical_music_server.entity.bbs.User;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.sql.Date;
+import java.sql.Time;
 import java.util.Objects;
 import java.util.Set;
 
@@ -15,6 +17,7 @@ import java.util.Set;
  * @date 2020/05/05
  */
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 public class SongList implements Serializable, Shareable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,6 +31,7 @@ public class SongList implements Serializable, Shareable {
     private String introduction;
 
     @ManyToOne
+    @CreatedBy
     private User creator;
 
     @Column
@@ -40,14 +44,12 @@ public class SongList implements Serializable, Shareable {
     private boolean open= true;
 
     public SongList() {
-        this.date=new Date(System.currentTimeMillis());
     }
 
     public SongList(String introduction, @NotEmpty String name,User creator, Set<Song> songs) {
         this.name=name;
         this.introduction = introduction;
         this.creator = creator;
-        this.date=new Date(System.currentTimeMillis());
         this.songs = songs;
     }
 
@@ -73,6 +75,14 @@ public class SongList implements Serializable, Shareable {
 
     public void setCreator(User creator) {
         this.creator = creator;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Date getDate() {

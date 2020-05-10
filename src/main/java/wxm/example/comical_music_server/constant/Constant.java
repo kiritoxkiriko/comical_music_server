@@ -29,7 +29,21 @@ public class Constant {
     //redis
     public static final String PREFIX_PHONE="PHONE_";
 
+    //path
 
+    public static final String RESOURCE_PATH="/Users/Alex/Desktop/static";
+
+    public static final String IMG_PATH="/img";
+
+    public static final String AUDIO_PATH="/audio";
+
+    public static final String LRC_PATH="/lrc";
+
+    public static final String STATIC_URL_PATH ="/static";
+
+    //Domain
+
+    public static final String DOMAIN_URL="http://localhost:8088";
 
 
 }

@@ -20,9 +20,9 @@ public interface PostDao extends JpaRepository<Post,Long> {
 
     List<Post> findAllByPostedBoardId(Long boardId);
 
-    Page<Post> findAllByPostedBoardOrderByDateDesc(Board board, Pageable pagebale);
+    Page<Post> findAllByPostedBoard(Board board, Pageable pagebale);
 
-    Page<Post> findAllByPostedBoardIdOrderByDateDesc(Long boardId, Pageable pagebale);
+    Page<Post> findAllByPostedBoardId(Long boardId, Pageable pagebale);
 
-    Page<Post> findAllByPostedBoardNameOrderByDateDesc(String boardName, Pageable pageable );
+    Page<Post> findAllByPostedBoardName(String boardName, Pageable pageable );
 }

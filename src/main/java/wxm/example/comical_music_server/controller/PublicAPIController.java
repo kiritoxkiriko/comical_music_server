@@ -72,7 +72,7 @@ public class PublicAPIController {
 
     @PostMapping("/loginByPhone")
     public ResponseData loginByPhone(@RequestParam String phone, @RequestParam String password){
-        if(!userService.verifyPasswordByUsername(phone,password)){
+        if(!userService.verifyPasswordByPhone(phone,password)){
             return new ResponseData(StatusCode.FAILED, null);
         }else{
             User user=userService.getUserByPhone(phone);

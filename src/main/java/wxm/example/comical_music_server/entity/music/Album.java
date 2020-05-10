@@ -28,6 +28,8 @@ public class Album implements Serializable, Shareable {
     @ManyToOne
     private Singer singer;
 
+    private int year;
+
     public Album() {
     }
 
@@ -61,6 +63,14 @@ public class Album implements Serializable, Shareable {
 
     public void setSinger(Singer singer) {
         this.singer = singer;
+    }
+
+    public int getYear() {
+        return year;
+    }
+
+    public void setYear(int year) {
+        this.year = year;
     }
 
     @Override

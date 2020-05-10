@@ -1,9 +1,12 @@
 package wxm.example.comical_music_server.entity.bbs;
 
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.sql.Date;
+import java.util.Date;
 import java.util.Objects;
 
 /**
@@ -11,6 +14,7 @@ import java.util.Objects;
  * @date 2020/05/05
  */
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 public class Reply implements Serializable {
 
     @Id
@@ -28,7 +32,7 @@ public class Reply implements Serializable {
     @ManyToOne
     private Reply replyTo;
 
-    @NotNull
+    @CreatedDate
     @Column
     private Date date;
 
@@ -37,11 +41,9 @@ public class Reply implements Serializable {
 
 
     public Reply() {
-        this.date=new Date(System.currentTimeMillis());
     }
 
     public Reply(@NotNull Post post, @NotNull User replier, Reply replyTo) {
-        this.date=new Date(System.currentTimeMillis());
         this.post = post;
         this.replier = replier;
         this.replyTo = replyTo;
@@ -79,20 +81,20 @@ public class Reply implements Serializable {
         this.replyTo = replyTo;
     }
 
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
     public long getLikeCount() {
         return likeCount;
     }
 
     public void setLikeCount(long likeCount) {
         this.likeCount = likeCount;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     @Override

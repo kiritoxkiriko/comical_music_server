@@ -1,58 +1,50 @@
 package wxm.example.comical_music_server.entity.music;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.data.annotation.CreatedDate;
 
-import javax.persistence.*;
-import java.io.Serializable;
-import java.sql.Date;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import java.util.Date;
 import java.util.Objects;
 
 /**
  * @author Alex Wang
- * @date 2020/05/05
+ * @date 2020/05/10
  */
 @Entity
-public class Image implements Serializable, StaticResource, Shareable{
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class Image {
     @Id
-    @JsonIgnore
-    private long id;
-
-    @Column( unique = true)
     private String realPath;
 
+    @CreatedDate
     @Column
+    @JsonIgnore
     private Date date;
 
     public Image() {
-        this.date=new Date(System.currentTimeMillis());
     }
 
-
-
     public Image(String realPath) {
-        this.date=new Date(System.currentTimeMillis());
         this.realPath = realPath;
     }
 
-    @Override
-    public long getId() {
-        return id;
-    }
-
-    @Override
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    @Override
     public String getRealPath() {
         return realPath;
     }
 
-    @Override
     public void setRealPath(String realPath) {
         this.realPath = realPath;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     @Override
@@ -60,14 +52,19 @@ public class Image implements Serializable, StaticResource, Shareable{
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Image image = (Image) o;
-        return id == image.id &&
-                Objects.equals(realPath, image.realPath);
+        return Objects.equals(realPath, image.realPath);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, realPath);
+        return Objects.hash(realPath);
     }
 
-
+    @Override
+    public String toString() {
+        return "Image{" +
+                "realPath='" + realPath + '\'' +
+                ", date=" + date +
+                '}';
+    }
 }

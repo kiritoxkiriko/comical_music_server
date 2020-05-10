@@ -94,7 +94,15 @@
             <version>4.0.3</version>
         </dependency>
 
-<!--       JWT Shiro 快速开发 -->
+        <!-- https://mvnrepository.com/artifact/org.apache.tika/tika-core -->
+        <dependency>
+            <groupId>org.apache.tika</groupId>
+            <artifactId>tika-core</artifactId>
+            <version>1.22</version>
+        </dependency>
+
+
+        <!--       JWT Shiro 快速开发 -->
         <!-- https://mvnrepository.com/artifact/com.louislivi.fastdep/fastdep-shiro-jwt -->
 <!--        <dependency>-->
 <!--            <groupId>com.louislivi.fastdep</groupId>-->

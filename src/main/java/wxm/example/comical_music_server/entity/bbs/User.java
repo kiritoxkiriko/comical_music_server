@@ -1,13 +1,15 @@
 package wxm.example.comical_music_server.entity.bbs;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import wxm.example.comical_music_server.entity.user.UserSpace;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.sql.Date;
+import java.util.Date;
 import java.util.Objects;
 
 /**
@@ -16,9 +18,9 @@ import java.util.Objects;
  */
 
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 public class User implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JsonIgnore
     @Id
     private long id;
 
@@ -27,9 +29,11 @@ public class User implements Serializable {
     private String username;
 
     @Column(unique = true)
+    @JsonIgnore
     private String email;
 
     @Column(unique = true)
+    @JsonIgnore
     private String phone;
 
     @NotEmpty
@@ -37,20 +41,23 @@ public class User implements Serializable {
     @JsonIgnore
     private String password;
 
+    @JsonIgnore
     @ManyToOne
     private Role role;
 
     @Column
     private boolean ban = false;
 
+    @CreatedDate
     @Column
+    @JsonIgnore
     private Date createDate;
 
+    @JsonIgnore
     @OneToOne
     private UserSpace userSpace;
 
     public User() {
-        this.createDate=new Date(System.currentTimeMillis());
     }
 
     public User(@NotNull String username, String email, String phone, @NotNull String password, Role role, boolean ban) {
@@ -60,7 +67,6 @@ public class User implements Serializable {
         this.password = password;
         this.role = role;
         this.ban = ban;
-        this.createDate=new Date(System.currentTimeMillis());
     }
 
     public long getId() {
@@ -125,6 +131,14 @@ public class User implements Serializable {
 
     public void setBan(boolean ban) {
         this.ban = ban;
+    }
+
+    public Date getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
     }
 
     @Override
