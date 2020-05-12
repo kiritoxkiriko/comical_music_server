@@ -4,8 +4,10 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import wxm.example.comical_music_server.annotation.ParamCheck;
 import wxm.example.comical_music_server.constant.StatusCode;
-import wxm.example.comical_music_server.entity.ResponseData;
+import wxm.example.comical_music_server.entity.respone.PageResponseData;
+import wxm.example.comical_music_server.entity.respone.ResponseData;
 import wxm.example.comical_music_server.entity.bbs.Board;
 import wxm.example.comical_music_server.entity.bbs.Post;
 import wxm.example.comical_music_server.entity.bbs.User;
@@ -15,6 +17,8 @@ import wxm.example.comical_music_server.entity.music.SongList;
 import wxm.example.comical_music_server.service.*;
 import wxm.example.comical_music_server.utility.JWTUtil;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -53,7 +57,7 @@ public class PostAPIController {
         if (size==null){
             size=10;
         }
-        return new ResponseData(StatusCode.SUCCESS, postService.getByBoardId(boardId, page,size));
+        return new PageResponseData(StatusCode.SUCCESS, postService.getByBoardId(boardId, page,size));
     }
 
     @RequiresPermissions("view")
@@ -67,12 +71,12 @@ public class PostAPIController {
         if (size==null){
             size=10;
         }
-        return new ResponseData(StatusCode.SUCCESS, postService.getAll(page,size).get());
+        return new PageResponseData(StatusCode.SUCCESS, postService.getAll(page,size));
     }
 
     @RequiresPermissions("post")
     @PostMapping("")
-    public ResponseData post(@RequestParam String content, @RequestParam long boardId, List<MultipartFile> files, Long songId, Long songListId){
+    public ResponseData post(@RequestParam @ParamCheck String content, @RequestParam @ParamCheck Long boardId, List<MultipartFile> files, Long songId, Long songListId){
         if (!boardService.hasBoard(boardId)){
             return new ResponseData(StatusCode.NO_SUCH_BOARD,null);
         }

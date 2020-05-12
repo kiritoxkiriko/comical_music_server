@@ -7,8 +7,9 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.multipart.MultipartException;
+import org.springframework.web.servlet.NoHandlerFoundException;
 import wxm.example.comical_music_server.constant.StatusCode;
-import wxm.example.comical_music_server.entity.ResponseData;
+import wxm.example.comical_music_server.entity.respone.ResponseData;
 import wxm.example.comical_music_server.exception.NotFoundException;
 import wxm.example.comical_music_server.exception.UnauthorizedException;
 
@@ -49,7 +50,7 @@ public class ExceptionController {
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler({NotFoundException.class})
     public ResponseData handle404(){
-        return new ResponseData(404,"404 NOT FOUND",null);
+        return new ResponseData(StatusCode.NOT_FOUND,null);
     }
 
     // 捕捉其他所有异常
@@ -60,6 +61,13 @@ public class ExceptionController {
         return new ResponseData(getStatus(request).value(), ex.getMessage(), null);
     }
 
+    //捕捉404
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(NoHandlerFoundException.class)
+    public ResponseData handleSystem404(NoHandlerFoundException e){
+        return new ResponseData(404,e.getMessage(),null);
+    }
+
     private HttpStatus getStatus(HttpServletRequest request) {
         Integer statusCode = (Integer) request.getAttribute("javax.servlet.error.status_code");
         if (statusCode == null) {
@@ -67,5 +75,6 @@ public class ExceptionController {
         }
         return HttpStatus.valueOf(statusCode);
     }
+
 }
 

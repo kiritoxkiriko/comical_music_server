@@ -113,7 +113,7 @@ public class FileUtil {
         return suffix;
     }
     public static String getSuffix(String fileName){
-        String suffix = fileName.substring(fileName.lastIndexOf(".") + 1);
+        String suffix = fileName.substring(fileName.lastIndexOf(".") + 1).toLowerCase();
         return suffix;
     }
 
@@ -130,7 +130,7 @@ public class FileUtil {
 
         for (String s:
              suffixs) {
-            if (suffix.toLowerCase().equals(s)){
+            if (suffix.equals(s)){
                 return true;
             }
         }

@@ -17,7 +17,6 @@ import java.util.Objects;
 @Entity
 public class Image {
     @Id
-
     @JsonIgnore
     private String realName;
 

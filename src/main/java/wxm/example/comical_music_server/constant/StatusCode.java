@@ -7,6 +7,7 @@ package wxm.example.comical_music_server.constant;
 public enum StatusCode {
     SUCCESS("成功",200),
     UNAUTHORIZED("无权限",401),
+    NOT_FOUND("404 NOT FOUND",404),
     FAILED("失败",4001),
     VERIFY_FAILED("验证失败",4002),
     REGISTER_FAILED("注册失败",4003),

@@ -40,7 +40,8 @@ public class StaticAPIController {
             return ResponseEntity.ok()
                     .contentType(MediaType.parseMediaType(contentType))
                     .body(resource);
-        } catch (IOException e) {
+        } catch (Exception e) {
+            e.printStackTrace();
             throw new NotFoundException();
         }
     }

@@ -9,6 +9,6 @@ import wxm.example.comical_music_server.entity.music.Image;
  * @date 2020/05/09
  */
 @Repository
-public interface ImageDao extends JpaRepository<Image, Long> {
+public interface ImageDao extends JpaRepository<Image, String> {
 
 }

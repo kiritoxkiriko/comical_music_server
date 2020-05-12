@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import wxm.example.comical_music_server.constant.Constant;
 import wxm.example.comical_music_server.constant.StatusCode;
-import wxm.example.comical_music_server.entity.ResponseData;
+import wxm.example.comical_music_server.entity.respone.ResponseData;
 import wxm.example.comical_music_server.entity.music.Image;
 import wxm.example.comical_music_server.service.FileService;
 
@@ -34,6 +34,8 @@ public class UploadAPIController {
             return new ResponseData(StatusCode.SUCCESS, Constant.DOMAIN_URL+Constant.STATIC_URL_PATH+Constant.IMG_PATH+img.getRealName());
         }
     }
+
+
 
 
 }

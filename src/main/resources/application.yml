@@ -63,6 +63,10 @@ spring:
       enabled: true
       max-file-size: 50MB
       max-request-size: 50MB
+  mvc:
+    throw-exception-if-no-handler-found: true
+  resources:
+    add-mappings: false
 
 aliyun:
   sms:

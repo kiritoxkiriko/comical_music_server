@@ -13,7 +13,7 @@ import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import wxm.example.comical_music_server.entity.ResponseData;
+import wxm.example.comical_music_server.entity.respone.ResponseData;
 import wxm.example.comical_music_server.entity.bbs.User;
 import wxm.example.comical_music_server.exception.UnauthorizedException;
 import wxm.example.comical_music_server.service.UserService;
@@ -79,4 +79,5 @@ public class WebController {
     public ResponseData unauthorized() {
         return new ResponseData(401, "Unauthorized", null);
     }
+
 }

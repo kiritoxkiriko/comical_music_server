@@ -67,17 +67,16 @@ public class MyRealm extends AuthorizingRealm {
         String username = JWTUtil.getUsername(token);
         if (username == null) {
             LOGGER.error("token invalid");
-            throw new UnauthorizedException( "token invalid");
+            throw new AuthenticationException( "token invalid");
         }
-        //TODO 探索为什么每次认证失败都返回无消息的 UnauthenticatedException
 
         User user = userService.getUser(username);
         if (user == null) {
-            throw new UnauthorizedException("User didn't existed!");
+            throw new AuthenticationException("User didn't existed!");
         }
 
         if (! JWTUtil.verify(token, username, user.getPassword())) {
-            throw new UnauthorizedException("Username or password error");
+            throw new AuthenticationException("Username or password error");
         }
         //credential= token, principal=User 传给doGetAuthorizationInfo继续验证角色
         return new SimpleAuthenticationInfo(user, token, "my_realm");

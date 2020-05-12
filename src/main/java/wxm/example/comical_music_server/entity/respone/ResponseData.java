@@ -1,4 +1,4 @@
-package wxm.example.comical_music_server.entity;
+package wxm.example.comical_music_server.entity.respone;
 
 import wxm.example.comical_music_server.constant.StatusCode;
 

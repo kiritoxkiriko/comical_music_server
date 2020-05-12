@@ -1,8 +1,11 @@
 package wxm.example.comical_music_server.entity.music;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import wxm.example.comical_music_server.constant.Constant;
 import wxm.example.comical_music_server.entity.bbs.User;
 
 import javax.persistence.*;
@@ -44,11 +47,13 @@ public class Song implements Serializable, Shareable {
     private Album album;
 
     @NotNull
+    @JsonIgnore
     @Column(unique = true)
     private String realName;
 
     @Column(unique = true)
-    private String lrcName;
+    @JsonIgnore
+    private String realLrcName;
 
     @CreatedBy
     @ManyToOne
@@ -71,14 +76,14 @@ public class Song implements Serializable, Shareable {
         this.uploader = uploader;
     }
 
-    public Song(@NotEmpty String name, Language language, Genre genre, @NotNull Set<Singer> singers, @NotNull Album album, @NotNull String realName, String lrcName) {
+    public Song(@NotEmpty String name, Language language, Genre genre, @NotNull Set<Singer> singers, @NotNull Album album, @NotNull String realName, String realLrcName) {
         this.name = name;
         this.language = language;
         this.genre = genre;
         this.singers = singers;
         this.album = album;
         this.realName = realName;
-        this.lrcName = lrcName;
+        this.realLrcName = realLrcName;
     }
 
     public long getId() {
@@ -153,12 +158,22 @@ public class Song implements Serializable, Shareable {
         this.album = album;
     }
 
-    public String getLrcName() {
-        return lrcName;
+    public String getRealLrcName() {
+        return realLrcName;
     }
 
-    public void setLrcName(String lrcPath) {
-        this.lrcName = lrcPath;
+    public void setRealLrcName(String lrcPath) {
+        this.realLrcName = lrcPath;
+    }
+
+    @JsonGetter
+    public String getPath(){
+        return Constant.DOMAIN_URL+Constant.STATIC_URL_PATH+Constant.AUDIO_PATH+"/"+getRealName();
+    }
+
+    @JsonGetter
+    public String getLrcPath(){
+        return Constant.DOMAIN_URL+Constant.STATIC_URL_PATH+Constant.LRC_PATH+"/"+getRealLrcName();
     }
 
     @Override

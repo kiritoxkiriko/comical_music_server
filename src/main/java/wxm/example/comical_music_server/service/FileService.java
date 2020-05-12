@@ -27,6 +27,7 @@ import java.util.UUID;
  */
 @Service
 public class FileService {
+    //TODO 可将文件md5存入缓存，避免重复上传
 
     @Autowired
     private ImageDao imageDao;
@@ -65,7 +66,7 @@ public class FileService {
             return null;
         }
 
-        return Constant.STATIC_URL_PATH+Constant.AUDIO_PATH+"/"+realFile.getName();
+        return realFile.getName();
     }
 
     public String uploadLrc(MultipartFile file){
@@ -74,7 +75,7 @@ public class FileService {
         }
 
         String fileName = file.getOriginalFilename();
-        if(!FileUtil.isImage(fileName)){
+        if(!FileUtil.isLrc(fileName)){
             return  "";
         }
 
@@ -83,8 +84,9 @@ public class FileService {
             return null;
         }
 
-        return Constant.STATIC_URL_PATH+Constant.LRC_PATH+"/"+realFile.getName();
+        return realFile.getName();
     }
+
 
     public Resource loadFileAsResource(String path) throws IOException{
         String realPath= Constant.RESOURCE_PATH+path;
