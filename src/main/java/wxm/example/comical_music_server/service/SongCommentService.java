@@ -31,6 +31,10 @@ public class SongCommentService {
         return songCommentDao.findAllBySongId(songId, pageable);
     }
 
+    public SongComment getSongComment(long id){
+        return songCommentDao.findById(id).orElse(null);
+    }
+
     public SongComment addSongComment(long songId, @NotEmpty String content, Long commentId){
         if(!songDao.existsById(songId)){
             return null;

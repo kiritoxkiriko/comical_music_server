@@ -30,6 +30,9 @@ public class ReplyService {
         return replyDao.findAllByPostId(postId, pageable);
     }
 
+    public Reply getReply(long id){
+        return replyDao.findById(id).orElse(null);
+    }
     public Reply addReply(long postId, String content, Long replyId){
         if (StringUtil.isNullOrEmpty(content)){
             return null;

@@ -67,6 +67,10 @@ public class AlbumService {
         return albumDao.findAll(pageable);
     }
 
+    public Album getById(long id){
+        return albumDao.findById(id).orElse(null);
+    }
+
     public Page<Album> getByNameLike(String name, int page, int size){
         Pageable pageable= PageRequest.of(page,size,Sort.Direction.DESC,"year");
         return albumDao.findAllByNameIsLike("%"+name+"%", pageable);

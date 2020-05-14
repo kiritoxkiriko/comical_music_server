@@ -1,5 +1,6 @@
 package wxm.example.comical_music_server.entity.music;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import wxm.example.comical_music_server.entity.bbs.User;
@@ -8,7 +9,6 @@ import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 import java.sql.Date;
-import java.sql.Time;
 import java.util.Objects;
 import java.util.Set;
 
@@ -44,21 +44,26 @@ public class SongList implements Serializable, Shareable {
     @ManyToMany
     private Set<Song> songs;
 
+    @ManyToOne
+    private Image image;
+
     @Column
     private boolean open= true;
 
+    @JsonIgnore
     @Column
     private boolean delete=false;
 
     public SongList() {
     }
 
-    public SongList(String introduction, @NotEmpty String name, @NotEmpty Set<Tag> tags, User creator, Set<Song> songs) {
-        this.name=name;
+
+    public SongList(@NotEmpty String name, Set<Tag> tags, @NotEmpty String introduction, Set<Song> songs, Image image) {
+        this.name = name;
+        this.tags = tags;
         this.introduction = introduction;
-        this.creator = creator;
         this.songs = songs;
-        this.tags=tags;
+        this.image = this.image;
     }
 
     public long getId() {
@@ -115,6 +120,14 @@ public class SongList implements Serializable, Shareable {
 
     public void setOpen(boolean open) {
         this.open = open;
+    }
+
+    public Image getImage() {
+        return image;
+    }
+
+    public void setImage(Image image) {
+        this.image = image;
     }
 
     public boolean isDelete() {

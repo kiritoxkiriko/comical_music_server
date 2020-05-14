@@ -32,6 +32,28 @@ public class ResponseData {
         this.data = data;
     }
 
+    public ResponseData(StatusCode statusCode) {
+        this.code = statusCode.getCode();
+        this.msg = statusCode.getMsg();
+        this.data = null;
+    }
+
+    public static ResponseData of(StatusCode statusCode){
+        return new ResponseData(statusCode);
+    }
+
+    public static ResponseData of(StatusCode statusCode,Object o){
+        return new ResponseData(statusCode,o);
+    }
+
+    public static ResponseData success(Object o){
+        return new ResponseData(StatusCode.SUCCESS,o);
+    }
+
+    public static ResponseData failed(){
+        return new ResponseData(StatusCode.FAILED);
+    }
+
     public int getCode() {
         return code;
     }

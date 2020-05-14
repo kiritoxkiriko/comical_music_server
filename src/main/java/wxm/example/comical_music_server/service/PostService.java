@@ -31,6 +31,10 @@ public class PostService {
         return postDao.findAll(pageable);
     }
 
+    public Post getPost(long id){
+        return postDao.findById(id).orElse(null);
+    }
+
     public Page<Post> getByBoardId(long boardId, int page,int size){
         Pageable pageable=PageRequest.of(page,size, Sort.Direction.DESC, "date");
         return postDao.findAllByPostedBoardId(boardId,pageable);

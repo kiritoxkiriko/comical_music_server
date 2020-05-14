@@ -23,7 +23,7 @@ public class PageResponseData extends ResponseData{
         super();
     }
 
-    public PageResponseData(int code, String msg, Page page) {
+    public PageResponseData(int code, String msg, Page<Object> page) {
         super(code, msg, page.toList());
         total=page.getTotalPages();
         size=page.getSize();
@@ -31,8 +31,16 @@ public class PageResponseData extends ResponseData{
         hasNext=page.hasNext();
     }
 
-    public PageResponseData(StatusCode statusCode, Page page) {
+    public PageResponseData(StatusCode statusCode, Page<Object> page) {
         this(statusCode.getCode(),statusCode.getMsg(),page);
+    }
+
+    public static PageResponseData of(StatusCode statusCode, Page<Object> page){
+        return new PageResponseData(statusCode.getCode(),statusCode.getMsg(),page);
+    }
+
+    public static PageResponseData success(Page<Object> page){
+        return new PageResponseData(StatusCode.SUCCESS,page);
     }
 
     public Integer getSize() {

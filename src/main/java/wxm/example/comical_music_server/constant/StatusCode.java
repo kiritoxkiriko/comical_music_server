@@ -16,7 +16,12 @@ public enum StatusCode {
     NO_SUCH_BOARD("无此板块",4006),
     NO_SUCH_POST("无此动态",4007),
     NO_SUCH_REPLY("无此回复",4008),
-    FILE_TYPE_WRONG("文件类型错误",4009),
+    NO_SUCH_ALBUM("无此专辑",4009),
+    NO_SUCH_SINGER("无此歌手",4010),
+    NO_SUCH_SONG("无此音乐",4011),
+    NO_SUCH_SONG_LIST("无此歌单",4012),
+    NO_SUCH_SONG_COMMENT("无此歌曲评论",4013),
+    FILE_TYPE_WRONG("文件类型错误",4014),
     ;
     private String msg;
     private int code;

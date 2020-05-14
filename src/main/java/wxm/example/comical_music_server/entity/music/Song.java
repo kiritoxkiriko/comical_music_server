@@ -62,6 +62,7 @@ public class Song implements Serializable, Shareable {
     @Column
     private Date uploadDate;
 
+    @JsonIgnore
     @Column
     private boolean delete=false;
 

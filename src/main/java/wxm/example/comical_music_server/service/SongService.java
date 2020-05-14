@@ -84,9 +84,12 @@ public class SongService {
         if(StringUtil.isNullOrEmpty(realName)){
             return null;
         }
-        String lrcName=fileService.uploadLrc(lrcFile);
-        if (lrcName==null){
-            return null;
+        String lrcName= null;
+        if (lrcFile!=null) {
+            lrcName = fileService.uploadLrc(lrcFile);
+            if (lrcName==null){
+                return null;
+            }
         }
         Song song=new Song(name,tags,singers,album,realName,lrcName);
         return songDao.saveAndFlush(song);

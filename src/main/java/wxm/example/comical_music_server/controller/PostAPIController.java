@@ -48,35 +48,30 @@ public class PostAPIController {
 
     @RequiresPermissions("view")
     @GetMapping("/board/{boardId}")
-    public ResponseData getByBoardId(@PathVariable long boardId, Integer page, Integer size){
-        if(page==null){
-            page=0;
-        }else {
-            page-=1;
-        }
-        if (size==null){
-            size=10;
-        }
-        return new PageResponseData(StatusCode.SUCCESS, postService.getByBoardId(boardId, page,size));
+    public ResponseData getByBoardId(@PathVariable long boardId, @RequestParam(defaultValue = "1",required = false)Integer page, @RequestParam(defaultValue = "10",required = false)Integer size){
+        return new PageResponseData(StatusCode.SUCCESS, postService.getByBoardId(boardId, page-1,size));
     }
 
     @RequiresPermissions("view")
     @GetMapping("/all")
-    public ResponseData getAll(Integer page, Integer size){
-        if(page==null){
-            page=0;
-        }else {
-            page-=1;
+    public ResponseData getAll(@RequestParam(defaultValue = "1",required = false)Integer page, @RequestParam(defaultValue = "10",required = false)Integer size){
+        return new PageResponseData(StatusCode.SUCCESS, postService.getAll(page-1,size));
+    }
+
+    @RequiresPermissions("view")
+    @GetMapping("/{id}")
+    public ResponseData getById(@PathVariable long id){
+        Post post=postService.getPost(id);
+        if (post==null){
+            return ResponseData.of(StatusCode.NO_SUCH_POST);
         }
-        if (size==null){
-            size=10;
-        }
-        return new PageResponseData(StatusCode.SUCCESS, postService.getAll(page,size));
+        return ResponseData.success(post);
     }
 
     @RequiresPermissions("post")
     @PostMapping("")
-    public ResponseData post(@RequestParam @ParamCheck String content, @RequestParam @ParamCheck Long boardId, List<MultipartFile> files, Long songId, Long songListId){
+    public ResponseData post(@RequestParam @ParamCheck String content, @RequestParam @ParamCheck Long boardId,
+                             List<MultipartFile> files, Long songId, Long songListId){
         if (!boardService.hasBoard(boardId)){
             return new ResponseData(StatusCode.NO_SUCH_BOARD,null);
         }
@@ -126,6 +121,5 @@ public class PostAPIController {
         }
         return new ResponseData(StatusCode.SUCCESS,post);
     }
-
 
 }
