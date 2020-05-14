@@ -54,6 +54,12 @@ public class SongComment {
         this.song = song;
     }
 
+    public SongComment(@NotNull String content, SongComment replyTo, Song song) {
+        this.content = content;
+        this.replyTo = replyTo;
+        this.song = song;
+    }
+
     public long getId() {
         return id;
     }

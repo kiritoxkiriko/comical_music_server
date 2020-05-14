@@ -1,25 +1,21 @@
 package wxm.example.comical_music_server;
 
-import org.apache.commons.codec.language.bm.Languages;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.stereotype.Service;
 import wxm.example.comical_music_server.dao.*;
 import wxm.example.comical_music_server.entity.bbs.Board;
-import wxm.example.comical_music_server.entity.bbs.Post;
 import wxm.example.comical_music_server.entity.bbs.Role;
 import wxm.example.comical_music_server.entity.bbs.User;
-import wxm.example.comical_music_server.entity.music.Genre;
-import wxm.example.comical_music_server.entity.music.Language;
+import wxm.example.comical_music_server.entity.music.Tag;
 import wxm.example.comical_music_server.service.SMSService;
 import wxm.example.comical_music_server.service.UserService;
 import wxm.example.comical_music_server.utility.AuthUtil;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @SpringBootTest
 class ComicalSongServerApplicationTests {
@@ -30,9 +26,7 @@ class ComicalSongServerApplicationTests {
     @Autowired
     RoleDao roleDao;
     @Autowired
-    LanguageDao languageDao;
-    @Autowired
-    GenreDao genreDao;
+    TagDao tagDao;
     @Autowired
     BoardDao boardDao;
     @Autowired
@@ -55,25 +49,43 @@ class ComicalSongServerApplicationTests {
 
         User admin=userService.addUser("admin","","13800000000","admin",roleAdmin);
 
-        List<Language> languages=new ArrayList<>();
-        languages.add(new Language("华语"));
-        languages.add(new Language("粤语"));
-        languages.add(new Language("英语"));
-        languages.add(new Language("日语"));
-        languages.add(new Language("韩语"));
-        languages.add(new Language("其他"));
-        languageDao.saveAll(languages);
-        languageDao.flush();
+        Set<Tag> tags=new HashSet<>();
+        tags.add(new Tag("华语","language"));
+        tags.add(new Tag("粤语","language"));
+        tags.add(new Tag("欧美","language"));
+        tags.add(new Tag("日语","language"));
+        tags.add(new Tag("韩语","language"));
 
-        List<Genre> genres=new ArrayList<>();
-        genres.add(new Genre("流行"));
-        genres.add(new Genre("古典"));
-        genres.add(new Genre("摇滚"));
-        genres.add(new Genre("民族"));
-        genres.add(new Genre("金属"));
-        genres.add(new Genre("其他"));
-        genreDao.saveAll(genres);
-        genreDao.flush();
+        tags.add(new Tag("流行","genre"));
+        tags.add(new Tag("古典","genre"));
+        tags.add(new Tag("摇滚","genre"));
+        tags.add(new Tag("民族","genre"));
+        tags.add(new Tag("民谣","genre"));
+        tags.add(new Tag("电子","genre"));
+        tags.add(new Tag("舞曲","genre"));
+        tags.add(new Tag("说唱","genre"));
+        tags.add(new Tag("轻音乐","genre"));
+        tags.add(new Tag("爵士","genre"));
+        tags.add(new Tag("乡村","genre"));
+        tags.add(new Tag("R&B","genre"));
+
+        tags.add(new Tag("ACG","theme"));
+        tags.add(new Tag("影视原声","theme"));
+        tags.add(new Tag("校园","theme"));
+        tags.add(new Tag("游戏","theme"));
+        tags.add(new Tag("网络歌曲","theme"));
+        tags.add(new Tag("钢琴","theme"));
+        tags.add(new Tag("器乐","theme"));
+
+        tags.add(new Tag("学习","scene"));
+        tags.add(new Tag("工作","scene"));
+        tags.add(new Tag("休息","scene"));
+        tags.add(new Tag("通勤","scene"));
+
+        tagDao.saveAll(tags);
+        tagDao.flush();
+
+
 
         List<Board> boards=new ArrayList<>();
         boards.add(new Board("音乐分享"));

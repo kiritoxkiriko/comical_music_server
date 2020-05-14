@@ -2,6 +2,7 @@ package wxm.example.comical_music_server.entity.music;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.netty.util.internal.StringUtil;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -32,11 +33,9 @@ public class Song implements Serializable, Shareable {
     @Column
     private String name;
 
-    @ManyToOne
-    private Language language;
-
-    @ManyToOne
-    private Genre genre;
+    @ManyToMany
+    @NotEmpty
+    private Set<Tag> tags;
 
     @NotNull
     @ManyToMany
@@ -63,23 +62,16 @@ public class Song implements Serializable, Shareable {
     @Column
     private Date uploadDate;
 
+    @Column
+    private boolean delete=false;
+
     public Song(){
     }
 
-    public Song(@NotNull String name, Language language, Genre genre, @NotNull Set<Singer> singers, @NotNull Album album, @NotNull String realName, User uploader) {
-        this.name = name;
-        this.language = language;
-        this.genre = genre;
-        this.singers = singers;
-        this.album = album;
-        this.realName = realName;
-        this.uploader = uploader;
-    }
 
-    public Song(@NotEmpty String name, Language language, Genre genre, @NotNull Set<Singer> singers, @NotNull Album album, @NotNull String realName, String realLrcName) {
+    public Song(@NotEmpty String name, Set<Tag> tags, @NotNull Set<Singer> singers, @NotNull Album album, @NotNull String realName, String realLrcName) {
         this.name = name;
-        this.language = language;
-        this.genre = genre;
+        this.tags=tags;
         this.singers = singers;
         this.album = album;
         this.realName = realName;
@@ -134,20 +126,12 @@ public class Song implements Serializable, Shareable {
         this.uploadDate = uploadDate;
     }
 
-    public Language getLanguage() {
-        return language;
+    public Set<Tag> getTags() {
+        return tags;
     }
 
-    public void setLanguage(Language language) {
-        this.language = language;
-    }
-
-    public Genre getGenre() {
-        return genre;
-    }
-
-    public void setGenre(Genre genre) {
-        this.genre = genre;
+    public void setTags(Set<Tag> tags) {
+        this.tags = tags;
     }
 
     public Album getAlbum() {
@@ -166,6 +150,14 @@ public class Song implements Serializable, Shareable {
         this.realLrcName = lrcPath;
     }
 
+    public boolean isDelete() {
+        return delete;
+    }
+
+    public void setDelete(boolean delete) {
+        this.delete = delete;
+    }
+
     @JsonGetter
     public String getPath(){
         return Constant.DOMAIN_URL+Constant.STATIC_URL_PATH+Constant.AUDIO_PATH+"/"+getRealName();
@@ -173,6 +165,9 @@ public class Song implements Serializable, Shareable {
 
     @JsonGetter
     public String getLrcPath(){
+        if(!StringUtil.isNullOrEmpty(getRealLrcName())){
+            return null;
+        }
         return Constant.DOMAIN_URL+Constant.STATIC_URL_PATH+Constant.LRC_PATH+"/"+getRealLrcName();
     }
 

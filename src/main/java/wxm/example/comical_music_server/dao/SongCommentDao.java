@@ -22,6 +22,6 @@ public interface SongCommentDao extends JpaRepository<SongComment,Long> {
 
     Page<SongComment> findAllBySong(Song song, Pageable pageable);
 
-    Page<SongComment> findAllBySong(String songId, Pageable pageable);
+    Page<SongComment> findAllBySongId(long songId, Pageable pageable);
 
 }

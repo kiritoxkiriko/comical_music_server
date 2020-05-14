@@ -38,7 +38,7 @@ public class FileService {
 
         String fileName = file.getOriginalFilename();
         if(!FileUtil.isImage(fileName)){
-            return  null;
+            return null;
         }
 
         File realFile=FileUtil.upload(file,Constant.RESOURCE_PATH+Constant.IMG_PATH, UUID.randomUUID().toString().replace("-","")+"."+FileUtil.getSuffix(fileName));
@@ -53,12 +53,12 @@ public class FileService {
 
     public String uploadAudio(MultipartFile file){
         if(file.isEmpty()){
-            return null;
+            return "";
         }
 
         String fileName = file.getOriginalFilename();
         if(!FileUtil.isAudio(fileName)){
-            return  "";
+            return null;
         }
 
         File realFile=FileUtil.upload(file,Constant.RESOURCE_PATH+Constant.AUDIO_PATH, UUID.randomUUID().toString().replace("-","")+"."+FileUtil.getSuffix(fileName));

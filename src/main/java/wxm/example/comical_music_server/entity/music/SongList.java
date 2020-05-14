@@ -27,7 +27,11 @@ public class SongList implements Serializable, Shareable {
     @NotEmpty
     private String name;
 
+    @ManyToMany
+    private Set<Tag> tags;
+
     @Column
+    @NotEmpty
     private String introduction;
 
     @ManyToOne
@@ -43,14 +47,18 @@ public class SongList implements Serializable, Shareable {
     @Column
     private boolean open= true;
 
+    @Column
+    private boolean delete=false;
+
     public SongList() {
     }
 
-    public SongList(String introduction, @NotEmpty String name,User creator, Set<Song> songs) {
+    public SongList(String introduction, @NotEmpty String name, @NotEmpty Set<Tag> tags, User creator, Set<Song> songs) {
         this.name=name;
         this.introduction = introduction;
         this.creator = creator;
         this.songs = songs;
+        this.tags=tags;
     }
 
     public long getId() {
@@ -107,6 +115,22 @@ public class SongList implements Serializable, Shareable {
 
     public void setOpen(boolean open) {
         this.open = open;
+    }
+
+    public boolean isDelete() {
+        return delete;
+    }
+
+    public void setDelete(boolean delete) {
+        this.delete = delete;
+    }
+
+    public Set<Tag> getTags() {
+        return tags;
+    }
+
+    public void setTags(Set<Tag> tags) {
+        this.tags = tags;
     }
 
     @Override

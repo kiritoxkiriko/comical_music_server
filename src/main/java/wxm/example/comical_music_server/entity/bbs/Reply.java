@@ -1,9 +1,11 @@
 package wxm.example.comical_music_server.entity.bbs;
 
+import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
@@ -25,7 +27,10 @@ public class Reply implements Serializable {
     @ManyToOne
     private Post post;
 
-    @NotNull
+    @NotEmpty
+    private String content;
+
+    @CreatedBy
     @ManyToOne
     private User replier;
 
@@ -43,9 +48,9 @@ public class Reply implements Serializable {
     public Reply() {
     }
 
-    public Reply(@NotNull Post post, @NotNull User replier, Reply replyTo) {
+    public Reply(@NotNull Post post, @NotEmpty String content, Reply replyTo) {
         this.post = post;
-        this.replier = replier;
+        this.content = content;
         this.replyTo = replyTo;
     }
 
@@ -95,6 +100,14 @@ public class Reply implements Serializable {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
     }
 
     @Override

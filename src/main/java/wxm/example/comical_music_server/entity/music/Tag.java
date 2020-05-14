@@ -1,31 +1,33 @@
 package wxm.example.comical_music_server.entity.music;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.UniqueConstraint;
 import java.util.Objects;
 
 /**
  * @author Alex Wang
- * @date 2020/05/09
+ * @date 2020/05/13
  */
-
 @Entity
-public class Language {
-
+public class Tag {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JsonIgnore
     private long id;
 
     @Column(unique = true)
     private String name;
 
-    public Language() {
+    @Column
+    private String type;
+
+
+    public Tag() {
     }
 
-    public Language(String name) {
+    public Tag(String name, String type) {
         this.name = name;
+        this.type = type;
     }
 
     public long getId() {
@@ -44,13 +46,21 @@ public class Language {
         this.name = name;
     }
 
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Language language = (Language) o;
-        return id == language.id &&
-                Objects.equals(name, language.name);
+        Tag tag = (Tag) o;
+        return id == tag.id &&
+                Objects.equals(name, tag.name);
     }
 
     @Override
@@ -60,8 +70,9 @@ public class Language {
 
     @Override
     public String toString() {
-        return "Language{" +
-                "name='" + name + '\'' +
+        return "Tag{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
                 '}';
     }
 }

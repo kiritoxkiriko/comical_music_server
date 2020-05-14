@@ -22,5 +22,5 @@ public interface ReplyDao extends JpaRepository<Reply, Long> {
 
     Page<Reply> findAllByPost(Post post, Pageable pageable);
 
-    Page<Reply> findAllByPostId(Post post, Pageable pageable);
+    Page<Reply> findAllByPostId(long postId, Pageable pageable);
 }

@@ -31,6 +31,12 @@ public class Singer implements Serializable, Shareable {
     public Singer() {
     }
 
+    public Singer(@NotEmpty String name, String introduction, Image image) {
+        this.name = name;
+        this.introduction = introduction;
+        this.image = image;
+    }
+
     public long getId() {
         return id;
     }
