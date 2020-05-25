@@ -17,8 +17,6 @@ import wxm.example.comical_music_server.entity.music.SongList;
 import wxm.example.comical_music_server.service.*;
 import wxm.example.comical_music_server.utility.JWTUtil;
 
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -84,24 +82,24 @@ public class PostAPIController {
         }
 
         Set<Image> images=new HashSet<>();
-        Set<SongList> songLists= new HashSet<>();
+        Set<SongList> songLists = new HashSet<>();
         Set<Song> songs= new HashSet<>();
 
         Song song=null;
-        SongList songList=null;
+        SongList songList =null;
 
         if(songId!=null){
             song=songService.getSong(songId);
         }
 
         if (songListId!=null){
-            songList=songListService.getSongList(songListId);
+            songList =songListService.getSongList(songListId);
         }
 
         if (song!=null){
             songs.add(song);
         }
-        if (songList!=null){
+        if (songList !=null){
             songLists.add(songList);
         }
 

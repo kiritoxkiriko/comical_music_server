@@ -21,5 +21,5 @@ public interface SongDao extends JpaRepository<Song, Long> {
 
     Page<Song> findAllByNameIsLike(String name, Pageable pageable);
 
-    Page<Song> findAllByNameIsLikeAndDeleteEqualsFalse(String name, Pageable pageable);
+//    Page<Song> findAllByNameIsLikeAndDeleteEqualsFalse(String name, Pageable pageable);
 }

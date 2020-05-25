@@ -26,8 +26,8 @@ public class SongListAPIController {
     @GetMapping("/{id}")
     @RequiresPermissions("view")
     public ResponseData getById(@PathVariable long id){
-        SongList songList=songListService.getSongList(id);
-        if (songList==null){
+        SongList songList =songListService.getSongList(id);
+        if (songList ==null){
             return ResponseData.of(StatusCode.NO_SUCH_SONG_LIST);
         }
         return ResponseData.success(songList);
@@ -37,9 +37,9 @@ public class SongListAPIController {
     @RequiresPermissions("post")
     public ResponseData addSongList(@RequestParam @ParamCheck String name, @RequestParam @ParamCheck String introduction,
                                     @RequestParam Set<Long> songIds, @RequestParam Set<String> tags, @RequestParam MultipartFile image){
-        SongList songList=songListService.addSongList(name,introduction,tags,songIds,image);
+        SongList songList =songListService.addSongList(name,introduction,tags,songIds,image);
 
-        if (songList==null){
+        if (songList ==null){
             return ResponseData.failed();
         }
         return ResponseData.success(songList);

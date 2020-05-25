@@ -26,11 +26,11 @@ public interface SongListDao extends JpaRepository<SongList,Long> {
 
     List<SongList> findAllByCreatorId(long userId);
 
-    List<SongList> findAllByCreatorAndDeleteEqualsFalse(User user);
-
-    Page<SongList> findAllByCreatorAndDeleteEqualsFalse(User user, Pageable pageable);
-
-    Page<SongList> findAllByCreatorIdAndDeleteEqualsFalse(long userId, Pageable pageable);
+//    List<SongList> findAllByCreatorAndDeleteEqualsFalse(User user);
+//
+//    Page<SongList> findAllByCreatorAndDeleteEqualsFalse(User user, Pageable pageable);
+//
+//    Page<SongList> findAllByCreatorIdAndDeleteEqualsFalse(long userId, Pageable pageable);
 
 
 

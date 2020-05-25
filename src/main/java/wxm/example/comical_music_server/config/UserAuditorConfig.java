@@ -21,7 +21,7 @@ public class UserAuditorConfig implements AuditorAware<User> {
             Subject subject = SecurityUtils.getSubject();
             user = (User) SecurityUtils.getSubject().getPrincipals().getPrimaryPrincipal();
         } catch (Exception e) {
-            e.printStackTrace();
+            return Optional.ofNullable(user);
         }
         return Optional.ofNullable(user);
     }

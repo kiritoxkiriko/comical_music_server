@@ -34,7 +34,6 @@ public class Song implements Serializable, Shareable {
     private String name;
 
     @ManyToMany
-    @NotEmpty
     private Set<Tag> tags;
 
     @NotNull
@@ -64,7 +63,7 @@ public class Song implements Serializable, Shareable {
 
     @JsonIgnore
     @Column
-    private boolean delete=false;
+    private boolean exist=true;
 
     public Song(){
     }
@@ -151,12 +150,12 @@ public class Song implements Serializable, Shareable {
         this.realLrcName = lrcPath;
     }
 
-    public boolean isDelete() {
-        return delete;
+    public boolean isExist() {
+        return exist;
     }
 
-    public void setDelete(boolean delete) {
-        this.delete = delete;
+    public void setExist(boolean exist) {
+        this.exist = exist;
     }
 
     @JsonGetter

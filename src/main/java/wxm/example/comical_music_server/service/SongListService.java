@@ -64,7 +64,7 @@ public class SongListService {
             return null;
         }
 
-        SongList songList=new SongList(name,tags,introduction,songs,img);
+        SongList songList =new SongList(name,tags,introduction,songs,img);
 
         return songListDao.saveAndFlush(songList);
     }

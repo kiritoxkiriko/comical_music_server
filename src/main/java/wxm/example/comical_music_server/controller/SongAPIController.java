@@ -45,7 +45,7 @@ public class SongAPIController {
     @RequiresPermissions("view")
     public ResponseData getById(@PathVariable long id){
         Song song=songService.getSong(id);
-        if (song==null||song.isDelete()){
+        if (song==null||!song.isExist()){
             return ResponseData.of(StatusCode.NO_SUCH_SONG);
         }
         return ResponseData.success(song);

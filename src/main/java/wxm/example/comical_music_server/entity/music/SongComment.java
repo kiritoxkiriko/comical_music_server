@@ -44,6 +44,9 @@ public class SongComment {
     @Column
     private long likeCount=0;
 
+    @Column
+    private boolean exist=true;
+
     public SongComment() {
     }
 
@@ -106,6 +109,22 @@ public class SongComment {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public long getLikeCount() {
+        return likeCount;
+    }
+
+    public void setLikeCount(long likeCount) {
+        this.likeCount = likeCount;
+    }
+
+    public boolean isExist() {
+        return exist;
+    }
+
+    public void setExist(boolean exist) {
+        this.exist = exist;
     }
 
     @Override

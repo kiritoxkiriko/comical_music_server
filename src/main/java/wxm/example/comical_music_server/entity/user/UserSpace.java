@@ -1,8 +1,5 @@
 package wxm.example.comical_music_server.entity.user;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import wxm.example.comical_music_server.controller.WebController;
 import wxm.example.comical_music_server.entity.music.SongList;
 
 import javax.persistence.*;

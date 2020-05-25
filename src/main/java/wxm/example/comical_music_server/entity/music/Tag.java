@@ -1,9 +1,6 @@
 package wxm.example.comical_music_server.entity.music;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.UniqueConstraint;
+import javax.persistence.*;
 import java.util.Objects;
 
 /**
@@ -13,6 +10,7 @@ import java.util.Objects;
 @Entity
 public class Tag {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @Column(unique = true)

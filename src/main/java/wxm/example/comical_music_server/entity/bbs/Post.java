@@ -51,7 +51,11 @@ public class Post implements Serializable {
     @ManyToOne
     private Board postedBoard;
 
+    @Column
     private long likeCount=0;
+
+    @Column
+    private boolean exist=true;
 
 
     public Post() {
@@ -144,6 +148,14 @@ public class Post implements Serializable {
 
     public void setLikeCount(long likeCount) {
         this.likeCount = likeCount;
+    }
+
+    public boolean isExist() {
+        return exist;
+    }
+
+    public void setExist(boolean exist) {
+        this.exist = exist;
     }
 
     @Override

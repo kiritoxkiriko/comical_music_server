@@ -44,6 +44,9 @@ public class Reply implements Serializable {
     @Column
     private long likeCount=0;
 
+    @Column
+    private boolean exist=true;
+
 
     public Reply() {
     }
@@ -108,6 +111,14 @@ public class Reply implements Serializable {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public boolean isExist() {
+        return exist;
+    }
+
+    public void setExist(boolean exist) {
+        this.exist = exist;
     }
 
     @Override

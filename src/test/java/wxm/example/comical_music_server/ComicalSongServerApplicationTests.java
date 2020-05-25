@@ -1,5 +1,6 @@
 package wxm.example.comical_music_server;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -60,7 +61,6 @@ class ComicalSongServerApplicationTests {
         tags.add(new Tag("古典","genre"));
         tags.add(new Tag("摇滚","genre"));
         tags.add(new Tag("民族","genre"));
-        tags.add(new Tag("民谣","genre"));
         tags.add(new Tag("电子","genre"));
         tags.add(new Tag("舞曲","genre"));
         tags.add(new Tag("说唱","genre"));
@@ -99,6 +99,12 @@ class ComicalSongServerApplicationTests {
 //        Post post=new Post("123123",null,null,null,admin,board);
 //        postDao.saveAndFlush(post);
 
+    }
+
+    @Test
+    void generateJSON(){
+        ObjectMapper objectMapper=new ObjectMapper();
+        System.out.println();
     }
 
 }

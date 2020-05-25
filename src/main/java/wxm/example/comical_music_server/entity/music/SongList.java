@@ -2,13 +2,14 @@ package wxm.example.comical_music_server.entity.music;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import wxm.example.comical_music_server.entity.bbs.User;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
-import java.sql.Date;
+import java.util.Date;
 import java.util.Objects;
 import java.util.Set;
 
@@ -31,14 +32,13 @@ public class SongList implements Serializable, Shareable {
     private Set<Tag> tags;
 
     @Column
-    @NotEmpty
     private String introduction;
 
     @ManyToOne
     @CreatedBy
     private User creator;
 
-    @Column
+    @CreatedDate
     private Date date;
 
     @ManyToMany
@@ -52,7 +52,7 @@ public class SongList implements Serializable, Shareable {
 
     @JsonIgnore
     @Column
-    private boolean delete=false;
+    private boolean exist=true;
 
     public SongList() {
     }
@@ -63,8 +63,18 @@ public class SongList implements Serializable, Shareable {
         this.tags = tags;
         this.introduction = introduction;
         this.songs = songs;
-        this.image = this.image;
+        this.image = image;
     }
+
+    public SongList(@NotEmpty String name, Set<Tag> tags, @NotEmpty String introduction, Set<Song> songs, User user, Image image) {
+        this.name = name;
+        this.tags = tags;
+        this.introduction = introduction;
+        this.songs = songs;
+        this.image = image;
+        this.creator=user;
+    }
+
 
     public long getId() {
         return id;
@@ -72,6 +82,22 @@ public class SongList implements Serializable, Shareable {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Set<Tag> getTags() {
+        return tags;
+    }
+
+    public void setTags(Set<Tag> tags) {
+        this.tags = tags;
     }
 
     public String getIntroduction() {
@@ -90,14 +116,6 @@ public class SongList implements Serializable, Shareable {
         this.creator = creator;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public Date getDate() {
         return date;
     }
@@ -114,14 +132,6 @@ public class SongList implements Serializable, Shareable {
         this.songs = songs;
     }
 
-    public boolean isOpen() {
-        return open;
-    }
-
-    public void setOpen(boolean open) {
-        this.open = open;
-    }
-
     public Image getImage() {
         return image;
     }
@@ -130,20 +140,20 @@ public class SongList implements Serializable, Shareable {
         this.image = image;
     }
 
-    public boolean isDelete() {
-        return delete;
+    public boolean isOpen() {
+        return open;
     }
 
-    public void setDelete(boolean delete) {
-        this.delete = delete;
+    public void setOpen(boolean open) {
+        this.open = open;
     }
 
-    public Set<Tag> getTags() {
-        return tags;
+    public boolean isExist() {
+        return exist;
     }
 
-    public void setTags(Set<Tag> tags) {
-        this.tags = tags;
+    public void setExist(boolean exist) {
+        this.exist = exist;
     }
 
     @Override

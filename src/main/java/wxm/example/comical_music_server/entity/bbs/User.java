@@ -3,6 +3,7 @@ package wxm.example.comical_music_server.entity.bbs;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import wxm.example.comical_music_server.entity.music.Image;
 import wxm.example.comical_music_server.entity.user.UserSpace;
 
 import javax.persistence.*;
@@ -57,6 +58,9 @@ public class User implements Serializable {
     @OneToOne
     private UserSpace userSpace;
 
+    @ManyToOne
+    private Image image;
+
     public User() {
     }
 
@@ -67,6 +71,7 @@ public class User implements Serializable {
         this.password = password;
         this.role = role;
         this.ban = ban;
+        this.image=null;
     }
 
     public long getId() {
@@ -113,14 +118,6 @@ public class User implements Serializable {
         return role;
     }
 
-    public UserSpace getUserSpace() {
-        return userSpace;
-    }
-
-    public void setUserSpace(UserSpace userSpace) {
-        this.userSpace = userSpace;
-    }
-
     public void setRole(Role role) {
         this.role = role;
     }
@@ -139,6 +136,22 @@ public class User implements Serializable {
 
     public void setCreateDate(Date createDate) {
         this.createDate = createDate;
+    }
+
+    public UserSpace getUserSpace() {
+        return userSpace;
+    }
+
+    public void setUserSpace(UserSpace userSpace) {
+        this.userSpace = userSpace;
+    }
+
+    public Image getImage() {
+        return image;
+    }
+
+    public void setImage(Image image) {
+        this.image = image;
     }
 
     @Override

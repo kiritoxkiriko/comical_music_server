@@ -3,10 +3,7 @@ package wxm.example.comical_music_server.service;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import wxm.example.comical_music_server.controller.WebController;
 import wxm.example.comical_music_server.dao.SongListDao;
 import wxm.example.comical_music_server.dao.UserDao;
 import wxm.example.comical_music_server.dao.UserSpaceDao;
@@ -14,6 +11,7 @@ import wxm.example.comical_music_server.entity.bbs.Role;
 import wxm.example.comical_music_server.entity.bbs.User;
 import wxm.example.comical_music_server.entity.music.Song;
 import wxm.example.comical_music_server.entity.music.SongList;
+import wxm.example.comical_music_server.entity.music.Tag;
 import wxm.example.comical_music_server.entity.user.UserSpace;
 import wxm.example.comical_music_server.utility.AuthUtil;
 import wxm.example.comical_music_server.utility.PhoneCheckUtil;
@@ -21,7 +19,6 @@ import wxm.example.comical_music_server.utility.PhoneCheckUtil;
 import javax.validation.constraints.NotNull;
 import java.util.HashSet;
 import java.util.List;
-import java.util.concurrent.ConcurrentSkipListSet;
 
 /**
  * @author Alex Wang
@@ -79,9 +76,9 @@ public class UserService {
             return null;
         }
 
-        SongList songList=new SongList(user.getUsername()+"'s favorite songs", user.getUsername()+"'s favorite songs",user, new HashSet<Song>());
-        songList=songListDao.saveAndFlush(songList);
-        if (songList==null){
+        SongList songList =new SongList(user.getUsername(),new HashSet<Tag>(),user.getUsername(), new HashSet<Song>(), user ,user.getImage());
+        songList =songListDao.saveAndFlush(songList);
+        if (songList ==null){
             return null;
         }
 
