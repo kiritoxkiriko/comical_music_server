@@ -19,7 +19,7 @@ import java.util.Set;
  * @date 2020/05/10
  */
 
-@Service
+@RestController
 @RequestMapping("/api/song")
 public class SongAPIController {
 

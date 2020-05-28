@@ -27,7 +27,7 @@ public class PostService {
     private PostDao postDao;
 
     public Page<Post> getAll(int page,int size){
-        Pageable pageable=PageRequest.of(page,size, Sort.Direction.DESC, "date");
+        Pageable pageable=PageRequest.of(page,size, Sort.Direction.DESC, "time");
         return postDao.findAll(pageable);
     }
 
@@ -36,12 +36,13 @@ public class PostService {
     }
 
     public Page<Post> getByBoardId(long boardId, int page,int size){
-        Pageable pageable=PageRequest.of(page,size, Sort.Direction.DESC, "date");
+        Pageable pageable=PageRequest.of(page,size, Sort.Direction.DESC, "time");
         return postDao.findAllByPostedBoardId(boardId,pageable);
     }
 
-    public Post add(String content, Set<Song> sharedSongs, Set<Image> sharedImages, Set<SongList> sharedSongLists, @NotNull Board postedBoard){
+    public Post add(String content, Set<Song> sharedSongs, Set<Image> sharedImages, Set<SongList> sharedSongLists, @NotNull Board postedBoard, int type){
         Post post=new Post(content, sharedSongs, sharedImages, sharedSongLists, postedBoard);
+        post.setType(type);
         return postDao.saveAndFlush(post);
     }
 }

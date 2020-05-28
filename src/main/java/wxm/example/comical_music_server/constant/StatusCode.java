@@ -7,6 +7,7 @@ package wxm.example.comical_music_server.constant;
 public enum StatusCode {
     SUCCESS("成功",200),
     UNAUTHORIZED("无权限",401),
+    TOKEN_EXPIRE("Token过期",402),
     NOT_FOUND("404 NOT FOUND",404),
     FAILED("失败",4001),
     VERIFY_FAILED("验证失败",4002),
@@ -21,7 +22,8 @@ public enum StatusCode {
     NO_SUCH_SONG("无此音乐",4011),
     NO_SUCH_SONG_LIST("无此歌单",4012),
     NO_SUCH_SONG_COMMENT("无此歌曲评论",4013),
-    FILE_TYPE_WRONG("文件类型错误",4014),
+    NO_SUCH_POST_TYPE("无此动态类型",4014),
+    FILE_TYPE_WRONG("文件类型错误",4015),
     ;
     private String msg;
     private int code;

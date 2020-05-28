@@ -1,6 +1,7 @@
 package wxm.example.comical_music_server.shiro;
 
 
+import com.auth0.jwt.exceptions.TokenExpiredException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.shiro.authc.*;
@@ -75,8 +76,13 @@ public class MyRealm extends AuthorizingRealm {
             throw new AuthenticationException("User didn't existed!");
         }
 
-        if (! JWTUtil.verify(token, username, user.getPassword())) {
-            throw new AuthenticationException("Username or password error");
+        try {
+            if (! JWTUtil.verify(token, username, user.getPassword())) {
+                throw new AuthenticationException("Username or password error");
+            }
+        } catch (TokenExpiredException e) {
+            //TokenExpiredException将转换为自己实现的类
+            throw new wxm.example.comical_music_server.exception.TokenExpiredException(e.getMessage());
         }
         //credential= token, principal=User 传给doGetAuthorizationInfo继续验证角色
         return new SimpleAuthenticationInfo(user, token, "my_realm");

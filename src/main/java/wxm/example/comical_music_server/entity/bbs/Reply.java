@@ -1,5 +1,6 @@
 package wxm.example.comical_music_server.entity.bbs;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -24,6 +25,7 @@ public class Reply implements Serializable {
     private long id;
 
     @NotNull
+    @JsonIgnore
     @ManyToOne
     private Post post;
 

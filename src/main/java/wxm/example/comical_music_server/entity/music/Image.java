@@ -1,6 +1,7 @@
 package wxm.example.comical_music_server.entity.music;
 
 import com.fasterxml.jackson.annotation.*;
+import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 import wxm.example.comical_music_server.constant.Constant;
 
@@ -23,7 +24,7 @@ public class Image {
     @CreatedDate
     @Column
     @JsonIgnore
-    private Date date;
+    private Date time;
 
     public Image() {
     }
@@ -40,12 +41,12 @@ public class Image {
         this.realName = realPath;
     }
 
-    public Date getDate() {
-        return date;
+    public Date getTime() {
+        return time;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setTime(Date date) {
+        this.time = date;
     }
 
     @JsonGetter
@@ -70,7 +71,7 @@ public class Image {
     public String toString() {
         return "Image{" +
                 "realPath='" + realName + '\'' +
-                ", date=" + date +
+                ", date=" + time +
                 '}';
     }
 }

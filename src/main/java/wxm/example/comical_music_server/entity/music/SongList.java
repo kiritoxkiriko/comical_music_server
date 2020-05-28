@@ -1,6 +1,7 @@
 package wxm.example.comical_music_server.entity.music;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -38,8 +39,8 @@ public class SongList implements Serializable, Shareable {
     @CreatedBy
     private User creator;
 
-    @CreatedDate
-    private Date date;
+    @CreationTimestamp
+    private Date time;
 
     @ManyToMany
     private Set<Song> songs;
@@ -116,12 +117,12 @@ public class SongList implements Serializable, Shareable {
         this.creator = creator;
     }
 
-    public Date getDate() {
-        return date;
+    public Date getTime() {
+        return time;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setTime(Date time) {
+        this.time = time;
     }
 
     public Set<Song> getSongs() {

@@ -4,6 +4,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTDecodeException;
+import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
@@ -21,7 +22,7 @@ public class JWTUtil {
      * @param secret 用户的密码
      * @return 是否正确
      */
-    public static boolean verify(String token, String username, String secret) {
+    public static boolean verify(String token, String username, String secret) throws TokenExpiredException{
         try {
             Algorithm algorithm = Algorithm.HMAC256(secret);
             JWTVerifier verifier = JWT.require(algorithm)
@@ -29,7 +30,9 @@ public class JWTUtil {
                     .build();
             DecodedJWT jwt = verifier.verify(token);
             return true;
-        } catch (Exception exception) {
+        } catch (TokenExpiredException e) {
+            throw e;
+        } catch (Exception e) {
             return false;
         }
     }
@@ -55,7 +58,7 @@ public class JWTUtil {
      */
     public static String sign(String username, String secret) {
         try {
-            Date date = new Date(System.currentTimeMillis()+ Constant.EXPIRE_TIME);
+            Date date = new Date(System.currentTimeMillis()+ Constant.TOKEN_EXPIRE_TIME);
             Algorithm algorithm = Algorithm.HMAC256(secret);
             // 附带username信息
             return JWT.create()

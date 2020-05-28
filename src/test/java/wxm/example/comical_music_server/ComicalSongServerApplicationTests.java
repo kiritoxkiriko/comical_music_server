@@ -1,15 +1,16 @@
 package wxm.example.comical_music_server;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import wxm.example.comical_music_server.dao.*;
-import wxm.example.comical_music_server.entity.bbs.Board;
-import wxm.example.comical_music_server.entity.bbs.Role;
-import wxm.example.comical_music_server.entity.bbs.User;
-import wxm.example.comical_music_server.entity.music.Tag;
+import wxm.example.comical_music_server.entity.bbs.*;
+import wxm.example.comical_music_server.entity.music.*;
+import wxm.example.comical_music_server.entity.user.UserSpace;
 import wxm.example.comical_music_server.service.SMSService;
+import wxm.example.comical_music_server.service.SongListService;
 import wxm.example.comical_music_server.service.UserService;
 import wxm.example.comical_music_server.utility.AuthUtil;
 
@@ -104,7 +105,42 @@ class ComicalSongServerApplicationTests {
     @Test
     void generateJSON(){
         ObjectMapper objectMapper=new ObjectMapper();
-        System.out.println();
+        var var1=new User();
+        var var2=new Board();
+        var var3=new Reply();
+        var var4=new Post();
+        var var5=new Role();
+        var var6=new Album();
+        var var7=new Image();
+        var var8=new Singer();
+        var var9=new Song();
+        var var10=new SongComment();
+        var var11=new SongList();
+        var var12=new Tag();
+        var var13=new UserSpace();
+        List<Object> list=new ArrayList<>();
+        list.add(var1);
+        list.add(var2);
+        list.add(var3);
+        list.add(var4);
+        list.add(var5);
+        list.add(var6);
+        list.add(var7);
+        list.add(var8);
+        list.add(var9);
+        list.add(var10);
+        list.add(var11);
+        list.add(var12);
+        list.add(var13);
+
+        try {
+            for (Object o:
+                 list) {
+                System.out.println(o.getClass().getSimpleName()+" : "+objectMapper.writeValueAsString(o));
+            }
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
     }
 
 }

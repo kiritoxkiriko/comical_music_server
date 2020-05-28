@@ -9,7 +9,7 @@ public class Constant {
 
     public static final String SECRET_CODE = "36d11172-b6ea-42e7-95b7-005d3a93147b";
 
-    public static final long EXPIRE_TIME = 7 * 24 * 3600 * 1000;
+    public static final long TOKEN_EXPIRE_TIME = 7 * 24 * 3600 * 1000;
 
     public static final String PASSWORD_SALT="huaji";
 
@@ -24,7 +24,7 @@ public class Constant {
 
     public static final String ALIYUN_SMS_SIGN_NAME= "滑稽音乐";
 
-    public static final String REDIS_SMS_CODE_MAP_NAME= "code";
+    public static final String ALIYUN_SMS_CODE_MAP_NAME= "code";
 
     //redis
     public static final String PREFIX_PHONE="PHONE_";
@@ -43,7 +43,7 @@ public class Constant {
 
     //Domain
 
-    public static final String DOMAIN_URL="http://localhost:8088";
+    public static final String DOMAIN_URL="http://192.168.199.147:8088";
 
 
 }

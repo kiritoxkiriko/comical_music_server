@@ -1,6 +1,7 @@
 package wxm.example.comical_music_server.entity.bbs;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import wxm.example.comical_music_server.entity.music.Image;
@@ -52,7 +53,7 @@ public class User implements Serializable {
     @CreatedDate
     @Column
     @JsonIgnore
-    private Date createDate;
+    private Date createTime;
 
     @JsonIgnore
     @OneToOne
@@ -130,12 +131,12 @@ public class User implements Serializable {
         this.ban = ban;
     }
 
-    public Date getCreateDate() {
-        return createDate;
+    public Date getCreateTime() {
+        return createTime;
     }
 
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 
     public UserSpace getUserSpace() {

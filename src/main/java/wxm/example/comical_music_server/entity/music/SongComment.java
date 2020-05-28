@@ -1,5 +1,7 @@
 package wxm.example.comical_music_server.entity.music;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -34,18 +36,20 @@ public class SongComment {
     @ManyToOne
     private SongComment replyTo;
 
+    @JsonIgnore
     @ManyToOne
     private Song song;
 
     @Column
     @CreatedDate
-    private Date date;
+    private Date time;
 
     @Column
     private long likeCount=0;
 
     @Column
     private boolean exist=true;
+
 
     public SongComment() {
     }
@@ -103,13 +107,6 @@ public class SongComment {
         this.song = song;
     }
 
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
 
     public long getLikeCount() {
         return likeCount;
@@ -126,6 +123,7 @@ public class SongComment {
     public void setExist(boolean exist) {
         this.exist = exist;
     }
+
 
     @Override
     public boolean equals(Object o) {

@@ -32,7 +32,7 @@ public class SMSUtil {
         request.putQueryParameter("PhoneNumbers", phoneNumber);
         request.putQueryParameter("SignName", Constant.ALIYUN_SMS_SIGN_NAME);
         request.putQueryParameter("TemplateCode", Constant.ALIYUN_SMS_TEMPLATE_CODE);
-        request.putQueryParameter("TemplateParam", "{ \"code\":\""+code+"\"}");
+        request.putQueryParameter("TemplateParam", "{ \""+Constant.ALIYUN_SMS_CODE_MAP_NAME+"\":\""+code+"\"}");
         try {
             CommonResponse response = client.getCommonResponse(request);
             if (response.getData().contains("OK")) {

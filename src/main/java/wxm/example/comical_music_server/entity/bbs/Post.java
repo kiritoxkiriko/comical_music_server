@@ -1,5 +1,6 @@
 package wxm.example.comical_music_server.entity.bbs;
 
+import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -26,7 +27,7 @@ public class Post implements Serializable {
     private long id;
 
     @CreatedDate
-    private Date date;
+    private Date time;
 
     @NotNull
     @Column
@@ -57,6 +58,14 @@ public class Post implements Serializable {
     @Column
     private boolean exist=true;
 
+    /**动态类型
+     * 1. 文字
+     * 2. 音乐
+     * 3. 歌单
+     */
+    @Column
+    private int type=1;
+
 
     public Post() {
     }
@@ -86,12 +95,12 @@ public class Post implements Serializable {
         this.id = id;
     }
 
-    public Date getDate() {
-        return date;
+    public Date getTime() {
+        return time;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setTime(Date time) {
+        this.time = time;
     }
 
     public String getContent() {
@@ -156,6 +165,14 @@ public class Post implements Serializable {
 
     public void setExist(boolean exist) {
         this.exist = exist;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
     }
 
     @Override

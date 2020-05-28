@@ -3,6 +3,7 @@ package wxm.example.comical_music_server.entity.music;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.netty.util.internal.StringUtil;
+import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -59,7 +60,7 @@ public class Song implements Serializable, Shareable {
 
     @CreatedDate
     @Column
-    private Date uploadDate;
+    private Date uploadTime;
 
     @JsonIgnore
     @Column
@@ -118,12 +119,12 @@ public class Song implements Serializable, Shareable {
         this.uploader = uploader;
     }
 
-    public Date getUploadDate() {
-        return uploadDate;
+    public Date getUploadTime() {
+        return uploadTime;
     }
 
-    public void setUploadDate(Date uploadDate) {
-        this.uploadDate = uploadDate;
+    public void setUploadTime(Date uploadDate) {
+        this.uploadTime = uploadDate;
     }
 
     public Set<Tag> getTags() {

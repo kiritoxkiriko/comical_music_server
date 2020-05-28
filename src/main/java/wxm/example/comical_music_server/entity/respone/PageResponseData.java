@@ -74,4 +74,14 @@ public class PageResponseData extends ResponseData{
     public void setHasNext(Boolean hasNext) {
         this.hasNext = hasNext;
     }
+
+    @Override
+    public String toString() {
+        return "PageResponseData{" +
+                "size=" + size +
+                ", total=" + total +
+                ", num=" + num +
+                ", hasNext=" + hasNext +
+                "} " + super.toString();
+    }
 }

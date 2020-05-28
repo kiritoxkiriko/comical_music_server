@@ -53,7 +53,9 @@ public class PostAPIController {
     @RequiresPermissions("view")
     @GetMapping("/all")
     public ResponseData getAll(@RequestParam(defaultValue = "1",required = false)Integer page, @RequestParam(defaultValue = "10",required = false)Integer size){
-        return new PageResponseData(StatusCode.SUCCESS, postService.getAll(page-1,size));
+        var res=new PageResponseData(StatusCode.SUCCESS, postService.getAll(page-1,size));
+        System.out.println(res);
+        return res;
     }
 
     @RequiresPermissions("view")
@@ -69,7 +71,8 @@ public class PostAPIController {
     @RequiresPermissions("post")
     @PostMapping("")
     public ResponseData post(@RequestParam @ParamCheck String content, @RequestParam @ParamCheck Long boardId,
-                             List<MultipartFile> files, Long songId, Long songListId){
+                             List<MultipartFile> imgs, Long songId, Long songListId,
+                             @RequestParam int type){
         if (!boardService.hasBoard(boardId)){
             return new ResponseData(StatusCode.NO_SUCH_BOARD,null);
         }
@@ -88,24 +91,39 @@ public class PostAPIController {
         Song song=null;
         SongList songList =null;
 
-        if(songId!=null){
-            song=songService.getSong(songId);
+        switch (type){
+            case 1:
+                break;
+            case 2:
+                if(songId!=null){
+                    song=songService.getSong(songId);
+                }
+                if (song!=null){
+                    songs.add(song);
+                }
+                if(songs.isEmpty()){
+                    return ResponseData.of(StatusCode.NO_SUCH_SONG);
+                }
+                break;
+            case 3:
+                if (songListId!=null){
+                    songList =songListService.getSongList(songListId);
+                }
+                if (songList !=null){
+                    songLists.add(songList);
+                }
+                if(songLists.isEmpty()){
+                    return ResponseData.of(StatusCode.NO_SUCH_SONG_LIST);
+                }
+                break;
+            default:return ResponseData.of(StatusCode.NO_SUCH_POST_TYPE);
         }
 
-        if (songListId!=null){
-            songList =songListService.getSongList(songListId);
-        }
 
-        if (song!=null){
-            songs.add(song);
-        }
-        if (songList !=null){
-            songLists.add(songList);
-        }
 
-        if(files!=null&&files.size()>0){
+        if(imgs!=null&&imgs.size()>0){
             for (MultipartFile file:
-                 files) {
+                 imgs) {
                 Image image=fileService.uploadImg(file);
                 if(image!=null){
                     images.add(image);
@@ -113,7 +131,7 @@ public class PostAPIController {
             }
         }
 
-        Post post=postService.add(content, songs, images, songLists, board);
+        Post post=postService.add(content, songs, images, songLists, board,type);
         if(post==null){
             return new ResponseData(StatusCode.FAILED,null);
         }

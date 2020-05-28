@@ -27,7 +27,7 @@ public class SongCommentService {
     private SongDao songDao;
 
     public Page<SongComment> getSongCommentsBySongId(long songId, int page, int size){
-        Pageable pageable= PageRequest.of(page,size, Sort.Direction.DESC, "date");
+        Pageable pageable= PageRequest.of(page,size, Sort.Direction.DESC, "time");
         return songCommentDao.findAllBySongId(songId, pageable);
     }
 

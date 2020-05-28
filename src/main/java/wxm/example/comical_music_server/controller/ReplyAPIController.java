@@ -17,7 +17,7 @@ import wxm.example.comical_music_server.service.ReplyService;
  * @author Alex Wang
  * @date 2020/05/14
  */
-@Service
+@RestController
 @RequestMapping("/api/reply")
 public class ReplyAPIController {
     @Autowired
@@ -54,5 +54,15 @@ public class ReplyAPIController {
             return ResponseData.failed();
         }
         return ResponseData.success(reply);
+    }
+
+    @RequiresPermissions("view")
+    @GetMapping("/count/post/{postId}")
+    public ResponseData countByPost(@PathVariable long postId){
+        try {
+            return ResponseData.success(replyService.getCount(postId));
+        } catch (Exception exception) {
+            return ResponseData.failed();
+        }
     }
 }

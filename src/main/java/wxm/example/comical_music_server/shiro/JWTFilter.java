@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -15,6 +16,7 @@ import java.io.IOException;
 public class JWTFilter extends BasicHttpAuthenticationFilter {
 
     private Logger LOGGER = LoggerFactory.getLogger(this.getClass());
+
 
     /**
      * 判断用户是否想要登入。
@@ -57,7 +59,7 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
             try {
                 executeLogin(request, response);
             } catch (Exception e) {
-                response401(request, response);
+                response401(e,request, response);
             }
         }
         return true;
@@ -84,11 +86,15 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
     /**
      * 将非法请求跳转到 /401
      */
-    private void response401(ServletRequest req, ServletResponse resp) {
+    private void response401(Exception exception,ServletRequest req, ServletResponse resp) {
         try {
-            HttpServletResponse httpServletResponse = (HttpServletResponse) resp;
-            httpServletResponse.sendRedirect("/401");
-        } catch (IOException e) {
+            //捕获异常，交给advice处理
+            HttpServletRequest request= (HttpServletRequest) req;
+            request.setAttribute("exception",exception);
+            HttpServletResponse response = (HttpServletResponse) resp;
+            request.getRequestDispatcher("/401").forward(request,response);
+//            httpServletResponse.sendRedirect("/401");
+        } catch (Exception e) {
             LOGGER.error(e.getMessage());
         }
     }

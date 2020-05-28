@@ -26,7 +26,7 @@ public class ReplyService {
     private PostDao postDao;
 
     public Page<Reply> getByPostId(long postId, int page, int size){
-        Pageable pageable= PageRequest.of(page,size, Sort.Direction.DESC, "date");
+        Pageable pageable= PageRequest.of(page,size, Sort.Direction.DESC, "time");
         return replyDao.findAllByPostId(postId, pageable);
     }
 
@@ -48,6 +48,10 @@ public class ReplyService {
         }
         Reply reply=new Reply(post, content,replyTo);
         return replyDao.saveAndFlush(reply);
+    }
+
+    public int getCount(long postId){
+        return replyDao.countByPostId(postId);
     }
 
     public boolean delete(long replyId){

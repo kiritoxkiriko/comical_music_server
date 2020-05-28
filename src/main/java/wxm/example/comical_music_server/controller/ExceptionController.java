@@ -11,6 +11,7 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 import wxm.example.comical_music_server.constant.StatusCode;
 import wxm.example.comical_music_server.entity.respone.ResponseData;
 import wxm.example.comical_music_server.exception.NotFoundException;
+import wxm.example.comical_music_server.exception.TokenExpiredException;
 import wxm.example.comical_music_server.exception.UnauthorizedException;
 
 import javax.naming.AuthenticationException;
@@ -39,6 +40,12 @@ public class ExceptionController {
     @ExceptionHandler(AuthenticationException.class)
     public ResponseData handle401(AuthenticationException exception){
         return new ResponseData(401, exception.getMessage(),null);
+    }
+
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    @ExceptionHandler(TokenExpiredException.class)
+    public ResponseData tokenExpire(TokenExpiredException exception){
+        return new ResponseData(StatusCode.TOKEN_EXPIRE,null);
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)

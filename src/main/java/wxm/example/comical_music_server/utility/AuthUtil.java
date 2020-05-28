@@ -3,6 +3,7 @@ package wxm.example.comical_music_server.utility;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import wxm.example.comical_music_server.constant.Constant;
 
 
 /**
@@ -11,7 +12,6 @@ import org.apache.logging.log4j.Logger;
  */
 
 public class AuthUtil {
-    private static final String SALT="huaji";
     private static Logger LOGGER= LogManager.getLogger(AuthUtil.class);
 
     public static boolean verifyPassword(String password, String saltedPassword){
@@ -19,6 +19,6 @@ public class AuthUtil {
     }
 
     public static String signPassword(String password){
-        return DigestUtils.md5Hex((password+"/"+SALT));
+        return DigestUtils.md5Hex((password+"/"+ Constant.PASSWORD_SALT));
     }
 }
