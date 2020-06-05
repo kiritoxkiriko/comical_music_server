@@ -63,6 +63,7 @@ public class UserService {
         return userDao.findUserByEmail(email);
     }
 
+
     synchronized public User addUser(@NotNull String username, String email, String phone, @NotNull String password, Role role){
         if (!PhoneCheckUtil.isChinaPhoneLegal(phone)){
             return null;
@@ -77,6 +78,7 @@ public class UserService {
         }
 
         SongList songList =new SongList(user.getUsername(),new HashSet<Tag>(),user.getUsername(), new HashSet<Song>(), user ,user.getImage());
+        songList.setOpen(false);
         songList =songListDao.saveAndFlush(songList);
         if (songList ==null){
             return null;

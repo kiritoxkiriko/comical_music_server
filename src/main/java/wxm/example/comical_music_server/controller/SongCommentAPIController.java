@@ -26,7 +26,7 @@ public class SongCommentAPIController {
     @RequiresPermissions("view")
     public ResponseData getCommentBySongId(@PathVariable long songId,
                                            @RequestParam(required = false, defaultValue = "1") Integer page,
-                                           @RequestParam(required = false, defaultValue = "10")Integer size){
+                                           @RequestParam(required = false, defaultValue = "20")Integer size){
         Page<SongComment> songComments=songCommentService.getSongCommentsBySongId(songId,page-1,size);
         return PageResponseData.success(songComments);
     }
@@ -50,6 +50,18 @@ public class SongCommentAPIController {
             return ResponseData.failed();
         }
         return ResponseData.success(songComment);
+    }
+
+
+    @GetMapping("/count/song/{songId}")
+    @RequiresPermissions("view")
+    public ResponseData count(@PathVariable long songId){
+        try {
+            return ResponseData.success(songCommentService.count(songId));
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return ResponseData.failed();
+        }
     }
 
 }

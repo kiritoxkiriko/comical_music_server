@@ -66,6 +66,9 @@ public class Post implements Serializable {
     @Column
     private int type=1;
 
+    @Transient
+    private Integer replyCount;
+
 
     public Post() {
     }
@@ -171,8 +174,17 @@ public class Post implements Serializable {
         return type;
     }
 
+
     public void setType(int type) {
         this.type = type;
+    }
+
+    public Integer getReplyCount() {
+        return replyCount;
+    }
+
+    public void setReplyCount(Integer replyCount) {
+        this.replyCount = replyCount;
     }
 
     @Override

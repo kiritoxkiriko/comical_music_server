@@ -12,6 +12,8 @@ import wxm.example.comical_music_server.dao.ReplyDao;
 import wxm.example.comical_music_server.entity.bbs.Post;
 import wxm.example.comical_music_server.entity.bbs.Reply;
 
+import java.util.List;
+
 /**
  * @author Alex Wang
  * @date 2020/05/13
@@ -25,36 +27,54 @@ public class ReplyService {
     @Autowired
     private PostDao postDao;
 
-    public Page<Reply> getByPostId(long postId, int page, int size){
-        Pageable pageable= PageRequest.of(page,size, Sort.Direction.DESC, "time");
+    public Page<Reply> getByPostId(long postId, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.Direction.DESC, "time");
         return replyDao.findAllByPostId(postId, pageable);
     }
 
-    public Reply getReply(long id){
+    public Reply getReply(long id) {
         return replyDao.findById(id).orElse(null);
     }
-    public Reply addReply(long postId, String content, Long replyId){
-        if (StringUtil.isNullOrEmpty(content)){
+
+    public Reply addReply(long postId, String content, Long replyId) {
+        if (StringUtil.isNullOrEmpty(content)) {
             return null;
         }
-        if( !postDao.existsById(postId)){
+        if (!postDao.existsById(postId)) {
             return null;
         }
-        Post post=new Post();
+        Post post = new Post();
         post.setId(postId);
-        Reply replyTo=null;
-        if (replyId!=null){
-            replyTo=replyDao.findById(replyId).orElse(null);
+        Reply replyTo = null;
+        if (replyId != null) {
+            replyTo = replyDao.findById(replyId).orElse(null);
         }
-        Reply reply=new Reply(post, content,replyTo);
+        Reply reply = new Reply(post, content, replyTo);
         return replyDao.saveAndFlush(reply);
     }
 
-    public int getCount(long postId){
+    public int getCount(long postId) {
         return replyDao.countByPostId(postId);
     }
 
-    public boolean delete(long replyId){
+    public List<Post> addCountToPosts(List<Post> posts) {
+        for (Post p :
+                posts) {
+            int count = getCount(p.getId());
+            p.setReplyCount(count);
+        }
+        return posts;
+    }
+
+    public Post addCountToPost(Post p) {
+
+        int count = getCount(p.getId());
+        p.setReplyCount(count);
+
+        return p;
+    }
+
+    public boolean delete(long replyId) {
         try {
             replyDao.deleteById(replyId);
             return true;

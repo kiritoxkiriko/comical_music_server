@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import wxm.example.comical_music_server.constant.Constant;
 import wxm.example.comical_music_server.entity.music.Image;
 import wxm.example.comical_music_server.entity.user.UserSpace;
 
@@ -47,6 +48,10 @@ public class User implements Serializable {
     @ManyToOne
     private Role role;
 
+    @JsonIgnore
+    @Column
+    private String permission;
+
     @Column
     private boolean ban = false;
 
@@ -62,10 +67,18 @@ public class User implements Serializable {
     @ManyToOne
     private Image image;
 
+    public String getPermission() {
+        return permission;
+    }
+
+    public void setPermission(String permission) {
+        this.permission = permission;
+    }
+
     public User() {
     }
 
-    public User(@NotNull String username, String email, String phone, @NotNull String password, Role role, boolean ban) {
+    public User(@NotNull String username, String email, String phone, @NotNull String password, @NotNull Role role, boolean ban) {
         this.username = username;
         this.email = email;
         this.phone = phone;
@@ -73,6 +86,7 @@ public class User implements Serializable {
         this.role = role;
         this.ban = ban;
         this.image=null;
+        this.permission=role.getPermission();
     }
 
     public long getId() {
@@ -148,6 +162,9 @@ public class User implements Serializable {
     }
 
     public Image getImage() {
+        if(image==null){
+            return new Image(Constant.DEFAULT_ICON_NAME);
+        }
         return image;
     }
 

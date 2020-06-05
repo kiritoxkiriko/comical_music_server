@@ -52,7 +52,7 @@ public class MyRealm extends AuthorizingRealm {
         Role role= user.getRole();
         if (role!=null){
             simpleAuthorizationInfo.addRole(role.getName());
-            Set<String> permission = new HashSet<String>(Arrays.asList(role.getPermission().split(",")));
+            Set<String> permission = new HashSet<String>(Arrays.asList(user.getPermission().split(",")));
             simpleAuthorizationInfo.addStringPermissions(permission);
         }
         return simpleAuthorizationInfo;
@@ -64,20 +64,20 @@ public class MyRealm extends AuthorizingRealm {
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken auth) throws AuthenticationException {
         String token = (String) auth.getCredentials();
-        // 解密获得username，用于和数据库进行对比
-        String username = JWTUtil.getUsername(token);
-        if (username == null) {
+        // 解密获得userId，用于和数据库进行对比
+        Long userId = JWTUtil.getUserId(token);
+        if (userId == null) {
             LOGGER.error("token invalid");
             throw new AuthenticationException( "token invalid");
         }
 
-        User user = userService.getUser(username);
+        User user = userService.getUser(userId);
         if (user == null) {
             throw new AuthenticationException("User didn't existed!");
         }
 
         try {
-            if (! JWTUtil.verify(token, username, user.getPassword())) {
+            if (! JWTUtil.verify(token, userId, user.getPassword())) {
                 throw new AuthenticationException("Username or password error");
             }
         } catch (TokenExpiredException e) {

@@ -29,9 +29,9 @@ public class ReplyAPIController {
 
     @GetMapping("/post/{postId}")
     @RequiresPermissions("view")
-    public ResponseData getByPostId(@PathVariable long postId,
+    public PageResponseData getByPostId(@PathVariable long postId,
                                     @RequestParam(required = false, defaultValue = "1") Integer page,
-                                    @RequestParam(required = false, defaultValue = "10")Integer size){
+                                    @RequestParam(required = false, defaultValue = "20")Integer size){
         Page<Reply> replies=replyService.getByPostId(postId, page-1,size);
         return PageResponseData.success(replies);
     }

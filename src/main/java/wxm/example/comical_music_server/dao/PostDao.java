@@ -16,13 +16,15 @@ import java.util.List;
 @Repository
 public interface PostDao extends JpaRepository<Post,Long> {
 
+    Page<Post> findAllByExist(Pageable p,boolean exist);
+
     List<Post> findAllByPostedBoard(Board board);
 
-    List<Post> findAllByPostedBoardId(Long boardId);
+    List<Post> findAllByPostedBoardIdAndExist(Long boardId,boolean exist);
 
     Page<Post> findAllByPostedBoard(Board board, Pageable pageable);
 
-    Page<Post> findAllByPostedBoardId(Long boardId, Pageable pageable);
+    Page<Post> findAllByPostedBoardIdAndExist(Long boardId,boolean exist, Pageable pageable);
 
     Page<Post> findAllByPostedBoardName(String boardName, Pageable pageable);
 }

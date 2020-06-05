@@ -47,10 +47,10 @@ public class Song implements Serializable, Shareable {
 
     @NotNull
     @JsonIgnore
-    @Column(unique = true)
+    @Column
     private String realName;
 
-    @Column(unique = true)
+    @Column
     @JsonIgnore
     private String realLrcName;
 
@@ -62,9 +62,15 @@ public class Song implements Serializable, Shareable {
     @Column
     private Date uploadTime;
 
-    @JsonIgnore
+    //@JsonIgnore
     @Column
     private boolean exist=true;
+
+    @Column
+    private long playCount=0;
+
+    @Transient
+    private Integer commentCount;
 
     public Song(){
     }
@@ -159,6 +165,22 @@ public class Song implements Serializable, Shareable {
         this.exist = exist;
     }
 
+    public Integer getCommentCount() {
+        return commentCount;
+    }
+
+    public void setCommentCount(Integer commentCount) {
+        this.commentCount = commentCount;
+    }
+
+    public long getPlayCount() {
+        return playCount;
+    }
+
+    public void setPlayCount(long playCount) {
+        this.playCount = playCount;
+    }
+
     @JsonGetter
     public String getPath(){
         return Constant.DOMAIN_URL+Constant.STATIC_URL_PATH+Constant.AUDIO_PATH+"/"+getRealName();
@@ -166,7 +188,7 @@ public class Song implements Serializable, Shareable {
 
     @JsonGetter
     public String getLrcPath(){
-        if(!StringUtil.isNullOrEmpty(getRealLrcName())){
+        if(StringUtil.isNullOrEmpty(getRealLrcName())){
             return null;
         }
         return Constant.DOMAIN_URL+Constant.STATIC_URL_PATH+Constant.LRC_PATH+"/"+getRealLrcName();

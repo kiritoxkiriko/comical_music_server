@@ -12,6 +12,7 @@ import wxm.example.comical_music_server.entity.music.Song;
 import wxm.example.comical_music_server.entity.music.SongComment;
 
 import javax.validation.constraints.NotEmpty;
+import java.util.List;
 
 /**
  * @author Alex Wang
@@ -60,5 +61,25 @@ public class SongCommentService {
         } catch (Exception e) {
             return false;
         }
+    }
+
+    public int count(long songId){
+        return songCommentDao.countBySongId(songId);
+    }
+
+    public List<Song> addCountToSongs(List<Song> songs){
+        for (Song s:
+             songs) {
+            int count=count(s.getId());
+            s.setCommentCount(count);
+        }
+        return songs;
+    }
+    public Song addCountToSong(Song s){
+
+        int count=count(s.getId());
+        s.setCommentCount(count);
+
+        return s;
     }
 }

@@ -16,9 +16,13 @@ import java.util.List;
 @Repository
 public interface SongListDao extends JpaRepository<SongList,Long> {
 
-    List<SongList> findAllByNameIsLike(String name);
+    List<SongList> findAllByExistAndOpen(boolean exist,boolean open);
 
-    Page<SongList> findAllByNameIsLike(String name, Pageable pageable);
+    Page<SongList> findAllByExistAndOpen(boolean exist,boolean open,Pageable page);
+
+    List<SongList> findAllByNameLikeAndExistAndOpen(String name,boolean exist,boolean open);
+
+    Page<SongList> findAllByNameLikeAndExistAndOpen(String name,boolean exist,boolean open, Pageable pageable);
 
     SongList findByName(String name);
 

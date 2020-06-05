@@ -29,6 +29,10 @@ public class Constant {
     //redis
     public static final String PREFIX_PHONE="PHONE_";
 
+    public static final String PREFIX_USER_TAG="USER_TAG_";
+
+    public static final String PREFIX_USER_RECOMMAND="USER_RECOMMAND_";
+
     //path
 
     public static final String RESOURCE_PATH="/Users/Alex/Desktop/static";
@@ -41,9 +45,13 @@ public class Constant {
 
     public static final String STATIC_URL_PATH ="/static";
 
+    public static final String DEFAULT_ICON_NAME="icon_default.png";
+
+    public static final String DEFAULT_SONG_LIST_ICON_NAME="icon_song_list_default.jpg";
+
     //Domain
 
-    public static final String DOMAIN_URL="http://192.168.199.147:8088";
+    public static final String DOMAIN_URL="http://192.168.1.124:8088";
 
 
 }

@@ -24,4 +24,6 @@ public interface SongCommentDao extends JpaRepository<SongComment,Long> {
 
     Page<SongComment> findAllBySongId(long songId, Pageable pageable);
 
+    int countBySongId(long songId);
+
 }

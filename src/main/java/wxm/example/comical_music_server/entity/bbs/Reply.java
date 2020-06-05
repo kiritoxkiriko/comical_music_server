@@ -41,7 +41,7 @@ public class Reply implements Serializable {
 
     @CreatedDate
     @Column
-    private Date date;
+    private Date time;
 
     @Column
     private long likeCount=0;
@@ -99,12 +99,12 @@ public class Reply implements Serializable {
         this.likeCount = likeCount;
     }
 
-    public Date getDate() {
-        return date;
+    public Date getTime() {
+        return time;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setTime(Date date) {
+        this.time = date;
     }
 
     public String getContent() {

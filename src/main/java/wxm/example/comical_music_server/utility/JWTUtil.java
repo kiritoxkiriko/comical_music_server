@@ -22,11 +22,11 @@ public class JWTUtil {
      * @param secret 用户的密码
      * @return 是否正确
      */
-    public static boolean verify(String token, String username, String secret) throws TokenExpiredException{
+    public static boolean verify(String token, long userId, String secret) throws TokenExpiredException{
         try {
             Algorithm algorithm = Algorithm.HMAC256(secret);
             JWTVerifier verifier = JWT.require(algorithm)
-                    .withClaim("username", username)
+                    .withClaim("userId", userId)
                     .build();
             DecodedJWT jwt = verifier.verify(token);
             return true;
@@ -39,12 +39,12 @@ public class JWTUtil {
 
     /**
      * 获得token中的信息无需secret解密也能获得
-     * @return token中包含的用户名
+     * @return token中包含的用户id
      */
-    public static String getUsername(String token) {
+    public static Long getUserId(String token) {
         try {
             DecodedJWT jwt = JWT.decode(token);
-            return jwt.getClaim("username").asString();
+            return jwt.getClaim("userId").asLong();
         } catch (JWTDecodeException e) {
             return null;
         }
@@ -52,17 +52,17 @@ public class JWTUtil {
 
     /**
      * 生成签名,EXPIRE_TIME 后过期
-     * @param username 用户名
+     * @param userId 用户id
      * @param secret 用户的密码
      * @return 加密的token
      */
-    public static String sign(String username, String secret) {
+    public static String sign(Long userId, String secret) {
         try {
             Date date = new Date(System.currentTimeMillis()+ Constant.TOKEN_EXPIRE_TIME);
             Algorithm algorithm = Algorithm.HMAC256(secret);
             // 附带username信息
             return JWT.create()
-                    .withClaim("username", username)
+                    .withClaim("userId", userId)
                     .withExpiresAt(date)
                     .sign(algorithm);
         } catch (Exception e) {

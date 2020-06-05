@@ -1,5 +1,6 @@
 package wxm.example.comical_music_server.entity.respone;
 
+import com.google.gson.JsonObject;
 import org.springframework.data.domain.Page;
 import wxm.example.comical_music_server.constant.StatusCode;
 
@@ -9,13 +10,15 @@ import java.awt.print.Pageable;
  * @author Alex Wang
  * @date 2020/05/12
  */
-public class PageResponseData extends ResponseData{
+public class PageResponseData extends ResponseData {
 
     private Integer size;
 
     private Integer total;
 
     private Integer num;
+
+    private Long totalElements;
 
     private Boolean hasNext;
 
@@ -28,6 +31,7 @@ public class PageResponseData extends ResponseData{
         total=page.getTotalPages();
         size=page.getSize();
         num=page.getNumber();
+        totalElements=page.getTotalElements();
         hasNext=page.hasNext();
     }
 
@@ -73,6 +77,14 @@ public class PageResponseData extends ResponseData{
 
     public void setHasNext(Boolean hasNext) {
         this.hasNext = hasNext;
+    }
+
+    public Long getTotalElements() {
+        return totalElements;
+    }
+
+    public void setTotalElements(Long totalElements) {
+        this.totalElements = totalElements;
     }
 
     @Override

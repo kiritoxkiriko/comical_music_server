@@ -71,12 +71,12 @@ public class FileService {
 
     public String uploadLrc(MultipartFile file){
         if(file.isEmpty()){
-            return null;
+            return "";
         }
 
         String fileName = file.getOriginalFilename();
         if(!FileUtil.isLrc(fileName)){
-            return  "";
+            return  null;
         }
 
         File realFile=FileUtil.upload(file,Constant.RESOURCE_PATH+Constant.LRC_PATH, UUID.randomUUID().toString().replace("-","")+"."+FileUtil.getSuffix(fileName));

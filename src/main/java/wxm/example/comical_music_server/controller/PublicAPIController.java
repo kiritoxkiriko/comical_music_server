@@ -1,5 +1,6 @@
 package wxm.example.comical_music_server.controller;
 
+import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,7 +40,7 @@ public class PublicAPIController {
         if(smsService.verifyCode(phone,code)){
             User user=userService.addUser(username,null, phone, password, role);
             if (user!=null){
-                return new ResponseData(StatusCode.SUCCESS, JWTUtil.sign(user.getUsername(),user.getPassword()));
+                return new ResponseData(StatusCode.SUCCESS, JWTUtil.sign(user.getId(),user.getPassword()));
             }else{
                 return new ResponseData(StatusCode.REGISTER_FAILED, null);
             }
@@ -59,16 +60,16 @@ public class PublicAPIController {
         return new ResponseData(StatusCode.SUCCESS, userService.hasUsername(username));
     }
 
-    @PostMapping("/login")
-    public ResponseData loginByUsername(@RequestParam String username, @RequestParam String password){
-        if(!userService.verifyPasswordByUsername(username,password)){
-            return new ResponseData(StatusCode.FAILED, null);
-        }else{
-            return new ResponseData(StatusCode.SUCCESS, JWTUtil.sign(username, AuthUtil.signPassword(password)));
-        }
-    }
+//    @PostMapping("/login")
+//    public ResponseData loginByUsername(@RequestParam String username, @RequestParam String password){
+//        if(!userService.verifyPasswordByUsername(username,password)){
+//            return new ResponseData(StatusCode.FAILED, null);
+//        }else{
+//            return new ResponseData(StatusCode.SUCCESS, JWTUtil.sign(username, AuthUtil.signPassword(password)));
+//        }
+//    }
 
-    @PostMapping("/loginByPhone")
+    @PostMapping("/login")
     public ResponseData loginByPhone(@RequestParam String phone, @RequestParam String password){
         if(!userService.verifyPasswordByPhone(phone,password)){
             return new ResponseData(StatusCode.FAILED, null);
@@ -77,8 +78,15 @@ public class PublicAPIController {
             if (user==null){
                 return new ResponseData(StatusCode.NO_SUCH_USER, null);
             }
-            return new ResponseData(StatusCode.SUCCESS, JWTUtil.sign(user.getUsername(), user.getPassword()));
+            return new ResponseData(StatusCode.SUCCESS, JWTUtil.sign(user.getId(), user.getPassword()));
         }
+    }
+
+    @PostMapping("/login/refresh")
+    @RequiresAuthentication
+    public ResponseData refreshlogin(){
+        User user=JWTUtil.getCurrentUser();
+        return ResponseData.success(JWTUtil.sign(user.getId(),user.getPassword()));
     }
 
     @PostMapping("/quickLogin")
@@ -90,7 +98,7 @@ public class PublicAPIController {
             if(user==null){
                 return new ResponseData(StatusCode.NO_SUCH_USER,null);
             }
-            return new ResponseData(StatusCode.SUCCESS, JWTUtil.sign(user.getUsername(), user.getPassword()));
+            return new ResponseData(StatusCode.SUCCESS, JWTUtil.sign(user.getId(), user.getPassword()));
         }
     }
 

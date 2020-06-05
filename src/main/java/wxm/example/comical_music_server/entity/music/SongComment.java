@@ -51,6 +51,8 @@ public class SongComment {
     private boolean exist=true;
 
 
+
+
     public SongComment() {
     }
 
@@ -124,6 +126,13 @@ public class SongComment {
         this.exist = exist;
     }
 
+    public Date getTime() {
+        return time;
+    }
+
+    public void setTime(Date time) {
+        this.time = time;
+    }
 
     @Override
     public boolean equals(Object o) {

@@ -17,9 +17,19 @@ public interface SongDao extends JpaRepository<Song, Long> {
 
     Song findByName(String name);
 
-    List<Song> findAllByNameIsLike(String name);
+    Song findByRealName(String name);
 
-    Page<Song> findAllByNameIsLike(String name, Pageable pageable);
+    List<Song> findAllByNameContainingAndExist(String name,boolean exist);
+
+    Page<Song> findAllByNameContainingAndExist(String name,boolean exist,Pageable pageable);
+    
+    Page<Song> findAllByNameLike(String name,Pageable pageable);
+
+    Page<Song> findAllByExist(boolean exist,Pageable pageable);
+
+    List<Song> findAllByExist(boolean exist);
+
+
 
 //    Page<Song> findAllByNameIsLikeAndDeleteEqualsFalse(String name, Pageable pageable);
 }

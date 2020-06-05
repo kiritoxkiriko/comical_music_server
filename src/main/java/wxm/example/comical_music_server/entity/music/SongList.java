@@ -1,10 +1,9 @@
 package wxm.example.comical_music_server.entity.music;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.data.annotation.CreatedBy;
-import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import wxm.example.comical_music_server.constant.Constant;
 import wxm.example.comical_music_server.entity.bbs.User;
 
 import javax.persistence.*;
@@ -51,7 +50,10 @@ public class SongList implements Serializable, Shareable {
     @Column
     private boolean open= true;
 
-    @JsonIgnore
+    @Column
+    private long addCount =0;
+
+    //@JsonIgnore
     @Column
     private boolean exist=true;
 
@@ -134,6 +136,9 @@ public class SongList implements Serializable, Shareable {
     }
 
     public Image getImage() {
+        if (image==null){
+            return new Image(Constant.DEFAULT_SONG_LIST_ICON_NAME);
+        }
         return image;
     }
 
@@ -155,6 +160,14 @@ public class SongList implements Serializable, Shareable {
 
     public void setExist(boolean exist) {
         this.exist = exist;
+    }
+
+    public long getAddCount() {
+        return addCount;
+    }
+
+    public void setAddCount(long addCount) {
+        this.addCount = addCount;
     }
 
     @Override

@@ -23,6 +23,10 @@ public class Board implements Serializable {
     public Board() {
     }
 
+    public Board(long id){
+        this.id=id;
+    }
+
     public Board(@NotEmpty String name) {
         this.name = name;
     }

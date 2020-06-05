@@ -44,17 +44,25 @@ public class PostAPIController {
     @Autowired
     private SongService songService;
 
+    @Autowired
+    private ReplyService replyService;
+
     @RequiresPermissions("view")
     @GetMapping("/board/{boardId}")
     public ResponseData getByBoardId(@PathVariable long boardId, @RequestParam(defaultValue = "1",required = false)Integer page, @RequestParam(defaultValue = "10",required = false)Integer size){
-        return new PageResponseData(StatusCode.SUCCESS, postService.getByBoardId(boardId, page-1,size));
+        var res= new PageResponseData(StatusCode.SUCCESS, postService.getByBoardId(boardId, page-1,size));
+        List<Post> posts= (List<Post>) res.getData();
+        res.setData(replyService.addCountToPosts(posts));
+        return res;
     }
 
     @RequiresPermissions("view")
     @GetMapping("/all")
     public ResponseData getAll(@RequestParam(defaultValue = "1",required = false)Integer page, @RequestParam(defaultValue = "10",required = false)Integer size){
         var res=new PageResponseData(StatusCode.SUCCESS, postService.getAll(page-1,size));
-        System.out.println(res);
+        //System.out.println(res);
+        List<Post> posts= (List<Post>) res.getData();
+        res.setData(replyService.addCountToPosts(posts));
         return res;
     }
 
@@ -65,19 +73,20 @@ public class PostAPIController {
         if (post==null){
             return ResponseData.of(StatusCode.NO_SUCH_POST);
         }
+        post=replyService.addCountToPost(post);
         return ResponseData.success(post);
     }
 
     @RequiresPermissions("post")
     @PostMapping("")
-    public ResponseData post(@RequestParam @ParamCheck String content, @RequestParam @ParamCheck Long boardId,
+    public ResponseData post(@RequestParam @ParamCheck String content,
                              List<MultipartFile> imgs, Long songId, Long songListId,
                              @RequestParam int type){
-        if (!boardService.hasBoard(boardId)){
+        if (!boardService.hasBoard(3)){
             return new ResponseData(StatusCode.NO_SUCH_BOARD,null);
         }
         Board board=new Board();
-        board.setId(boardId);
+        board.setId(3);
 
         User user= JWTUtil.getCurrentUser();
         if(user.isBan()){
@@ -93,6 +102,9 @@ public class PostAPIController {
 
         switch (type){
             case 1:
+//                if(songId!=null||songListId!=null){
+//                    return ResponseData.failed();
+//                }
                 break;
             case 2:
                 if(songId!=null){
@@ -136,6 +148,16 @@ public class PostAPIController {
             return new ResponseData(StatusCode.FAILED,null);
         }
         return new ResponseData(StatusCode.SUCCESS,post);
+    }
+
+
+    @DeleteMapping("/{id}")
+    public ResponseData deleteById(@PathVariable long id){
+        var result=postService.delete(id);
+        if(!result){
+            return ResponseData.failed();
+        }
+        return ResponseData.success(result);
     }
 
 }

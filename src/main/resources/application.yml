@@ -1,6 +1,6 @@
 server:
   port: 8088
-  address: 192.168.199.147
+  address: 192.168.1.124
 spring:
   datasource:
     name: bbs

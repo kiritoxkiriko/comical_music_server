@@ -4,6 +4,7 @@ import wxm.example.comical_music_server.entity.music.SongList;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.ConcurrentSkipListSet;
@@ -27,7 +28,7 @@ public class UserSpace implements Serializable {
     private SongList favoriteSongs;
 
     @OneToMany
-    private Set<SongList> favoriteSongLists;
+    private Set<SongList> favoriteSongLists=new HashSet<>();
 
     public UserSpace() {
     }

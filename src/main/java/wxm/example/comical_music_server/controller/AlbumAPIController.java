@@ -42,9 +42,9 @@ public class AlbumAPIController {
 
     @RequiresPermissions("post")
     @PostMapping("")
-    public ResponseData add(@RequestParam @ParamCheck String content, @RequestParam MultipartFile image,
+    public ResponseData add(@RequestParam @ParamCheck String name, @RequestParam MultipartFile image,
                             @RequestParam long singerId, Integer year){
-        Album album=albumService.addAlbum(content, image, singerId, year);
+        Album album=albumService.addAlbum(name, image, singerId, year);
         if (album==null){
             return ResponseData.failed();
         }
