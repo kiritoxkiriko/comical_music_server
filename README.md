@@ -1,5 +1,5 @@
 # 滑稽音乐
-此项目为本科毕设 - 《基于多平台应用的音乐共享社区设计与实现》后端部分，后端请看 https://github.com/kiritoxkiriko/comical_music 
+此项目为本科毕设 - 《基于多平台应用的音乐共享社区设计与实现》后端部分，前端请看 https://github.com/kiritoxkiriko/comical_music 
 
 使用Spring Boot构建
 ORM: Spring Data JPA
