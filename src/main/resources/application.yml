@@ -73,9 +73,9 @@ spring:
 
 aliyun:
   sms:
-    accessKeyId: LTAI4Fc43JzfBGxDXf7qkb7N #创建的accesskey中的AccessKey ID
-    accessKeySecret: bRGeZvuYtwYAdyzjBiFSWPXP6hTojn #创建的accesskey中的Access Key Secret
-    template_code: SMS_189621502 #模板管理中的模板CODE
+    accessKeyId: 
+    accessKeySecret: 
+    template_code:  #模板管理中的模板CODE
     sign_name: 滑稽音乐 #签名管理中的签名
 
 
